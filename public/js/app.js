@@ -343,20 +343,34 @@ function renderMapa() {
     const cat   = MAP_CATEGORIES[cid];
     const items = MAP_LOCATIONS.filter(l => l.category === cid);
     if (!items.length) return '';
+    // Agrupar ubicaciones repetidas (ej: Baños, Red Húmeda) en un solo ítem
+    const groups = [];
+    for (const l of items) {
+      const g = groups.find(x => x.label === l.label);
+      if (g) g.count++; else groups.push({ ...l, count: 1 });
+    }
     return `<div class="mapa-cat-hdr" data-cat="${cid}">${cat.icon} ${cat.label}</div>` +
-      items.map(l =>
+      groups.map(l =>
         `<div class="mapa-loc-item" data-id="${l.id}" data-label="${l.label}" data-cat="${cid}">` +
         `<span class="mapa-loc-ico">${l.icon}</span>` +
-        `<span class="mapa-loc-name">${l.label}</span></div>`
+        `<span class="mapa-loc-name">${l.label}</span>` +
+        (l.count > 1 ? `<span class="mapa-loc-count">${l.count}</span>` : '') +
+        `</div>`
       ).join('');
   }).join('');
 
+  const emrgSeen  = new Set();
   const emrgCards = MAP_EMERGENCY_IDS.map(id => {
     const l = MAP_LOCATIONS.find(x => x.id === id);
-    if (!l) return '';
+    if (!l || emrgSeen.has(l.label)) return '';
+    emrgSeen.add(l.label);
+    const count = MAP_EMERGENCY_IDS.filter(i => {
+      const x = MAP_LOCATIONS.find(y => y.id === i);
+      return x && x.label === l.label;
+    }).length;
     return `<div class="mapa-emrg-card" data-goto="${l.id}">
       <div class="mapa-emrg-ci">${l.icon}</div>
-      <div class="mapa-emrg-cl">${l.label}</div>
+      <div class="mapa-emrg-cl">${l.label}${count > 1 ? ` (${count})` : ''}</div>
     </div>`;
   }).join('');
 
@@ -627,20 +641,36 @@ function initMap() {
   function goToLocation(loc, emergency) {
     if (!loc || !img.naturalWidth) return;
     clearPins();
-    addPin(loc, emergency, true);
 
-    const targetScale = Math.min(MAX, MIN * (loc.zoom || 4));
-    const px = (loc.x / 100) * img.naturalWidth;
-    const py = (loc.y / 100) * img.naturalHeight;
-    scale = targetScale;
-    tx = vp.clientWidth  / 2 - px * scale;
-    ty = vp.clientHeight / 2 - py * scale;
+    // Ubicaciones con el mismo nombre (Baños, Red Húmeda, Grifos…) se muestran todas a la vez
+    const group = MAP_LOCATIONS.filter(l => l.label === loc.label && l.category === loc.category);
+    group.forEach(l => addPin(l, emergency, true));
+
+    if (group.length === 1) {
+      const targetScale = Math.min(MAX, MIN * (loc.zoom || 4));
+      const px = (loc.x / 100) * img.naturalWidth;
+      const py = (loc.y / 100) * img.naturalHeight;
+      scale = targetScale;
+      tx = vp.clientWidth  / 2 - px * scale;
+      ty = vp.clientHeight / 2 - py * scale;
+    } else {
+      // Encuadrar todos los pines del grupo con un margen
+      const xs = group.map(l => (l.x / 100) * img.naturalWidth);
+      const ys = group.map(l => (l.y / 100) * img.naturalHeight);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      const bw = Math.max(maxX - minX, 1), bh = Math.max(maxY - minY, 1);
+      const fit = Math.min(vp.clientWidth * 0.72 / bw, vp.clientHeight * 0.72 / bh);
+      scale = Math.min(Math.max(MIN, fit), MIN * (loc.zoom || 4), MAX);
+      tx = vp.clientWidth  / 2 - ((minX + maxX) / 2) * scale;
+      ty = vp.clientHeight / 2 - ((minY + maxY) / 2) * scale;
+    }
     clamp(); applyTx(true);
 
-    activLbl.textContent = '📍 ' + loc.label;
+    activLbl.textContent = '📍 ' + loc.label + (group.length > 1 ? ` · ${group.length} puntos` : '');
     activLbl.classList.add('visible');
 
-    const sideItem = document.querySelector(`.mapa-loc-item[data-id="${loc.id}"]`);
+    const sideItem = document.querySelector(`.mapa-loc-item[data-label="${loc.label}"]`);
     if (sideItem) {
       sideItem.classList.add('active');
       sideItem.scrollIntoView({ block:'nearest', behavior:'smooth' });

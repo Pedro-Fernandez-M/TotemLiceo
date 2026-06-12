@@ -395,6 +395,12 @@ html, body {
 .mapa-cat-hdr.mapa-hidden  { display:none; }
 .mapa-loc-ico  { font-size:.88rem; flex-shrink:0; width:17px; text-align:center; }
 .mapa-loc-name { flex:1; line-height:1.25; }
+.mapa-loc-count {
+  flex-shrink:0; min-width:18px; text-align:center;
+  background:var(--bg3h); border:1px solid var(--border);
+  border-radius:10px; padding:1px 6px;
+  font-size:.68rem; font-weight:700; color:var(--txt2);
+}
 
 /* Colores de categoría — headers */
 .mapa-cat-hdr[data-cat="admin"]     { color:#4da6ff; border-left-color:#2188ff; }
