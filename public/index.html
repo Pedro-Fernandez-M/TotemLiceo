@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kiosk – Liceo Industrial Fenner</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ── PANTALLA IDLE ─────────────────────────────────────────── -->
+  <div id="idle-overlay">
+    <div class="idle-content">
+      <div class="idle-logo-wrap">
+        <div class="idle-logo">LIF</div>
+      </div>
+      <h1 class="idle-school-name">Liceo Industrial Fenner</h1>
+      <div id="idle-time" class="idle-time">00:00</div>
+      <div id="idle-date" class="idle-date">Cargando…</div>
+      <div class="idle-touch-hint">
+        <div class="idle-ripple"></div>
+        <span>Toca la pantalla para comenzar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── APLICACIÓN PRINCIPAL ──────────────────────────────────── -->
+  <div id="app" class="app-hidden">
+
+    <!-- Cabecera -->
+    <header class="topbar">
+      <div class="topbar-brand">
+        <div class="topbar-logo">LIF</div>
+        <div class="topbar-text">
+          <span class="topbar-name">Liceo Industrial Fenner</span>
+          <span class="topbar-tagline">Formando técnicos desde 1965</span>
+        </div>
+      </div>
+      <div class="topbar-clock">
+        <span id="hdr-time" class="hdr-time">00:00</span>
+        <span id="hdr-date" class="hdr-date">Fecha</span>
+      </div>
+    </header>
+
+    <!-- Cuerpo principal: dos columnas -->
+    <div class="body-layout">
+
+      <!-- ── PANEL IZQUIERDO ──────────────────────────────── -->
+      <section class="left-panel">
+
+        <!-- Grid de botones de navegación -->
+        <div id="nav-grid" class="nav-grid">
+          <button class="nav-btn btn-historia" data-section="historia">
+            <span class="nb-icon">📜</span>
+            <span class="nb-label">Nuestra Historia</span>
+          </button>
+          <button class="nav-btn btn-mapa" data-section="mapa">
+            <span class="nb-icon">🗺️</span>
+            <span class="nb-label">Mapa del Establecimiento</span>
+          </button>
+          <button class="nav-btn btn-clima" data-section="clima">
+            <span class="nb-icon">🌤️</span>
+            <span class="nb-label">Clima</span>
+          </button>
+          <button class="nav-btn btn-especialidades" data-section="especialidades">
+            <span class="nb-icon">⚙️</span>
+            <span class="nb-label">Especialidades</span>
+          </button>
+        </div>
+
+        <!-- Panel de contenido (oculto por defecto) -->
+        <div id="content-panel" class="content-panel hidden">
+          <div class="content-topbar">
+            <button id="back-btn" class="back-btn">← Volver al Menú</button>
+            <h2 id="content-title" class="content-title"></h2>
+          </div>
+          <div id="content-body" class="content-body"></div>
+        </div>
+
+      </section>
+
+      <!-- ── PANEL DERECHO: ASISTENTE FENNER ─────────────── -->
+      <aside class="right-panel">
+
+        <div class="ast-header">
+          <div class="ast-avatar-wrap">
+            <div class="ast-avatar">F</div>
+            <div id="ast-dot" class="ast-dot dot-idle"></div>
+          </div>
+          <div>
+            <h2 class="ast-title">Asistente FENNER</h2>
+            <span id="ast-status" class="ast-status">Listo para ayudarte</span>
+          </div>
+        </div>
+
+        <!-- Historial de chat -->
+        <div id="chat-log" class="chat-log">
+          <div class="msg msg-bot">
+            <div class="bubble">
+              ¡Hola! Soy <strong>FENNER</strong>, el asistente virtual del
+              Liceo Industrial Fenner. Puedo responder preguntas sobre
+              historia, especialidades, horarios y más.<br/>
+              ¿En qué te puedo ayudar?
+            </div>
+          </div>
+        </div>
+
+        <!-- Controles -->
+        <div class="ast-controls">
+          <div id="listening-bar" class="listening-bar hidden">
+            <div class="wave-bars">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <span class="listening-lbl">Escuchando…</span>
+          </div>
+
+          <button id="speak-btn" class="speak-btn">
+            <span class="mic-ico">🎙️</span>
+            <span id="speak-lbl">Hablar con FENNER</span>
+          </button>
+
+          <p class="ast-hint">Presiona el botón y habla claramente</p>
+        </div>
+
+      </aside>
+    </div><!-- /body-layout -->
+  </div><!-- /app -->
+
+  <script src="js/content.js"></script>
+  <script src="js/map-locations.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
