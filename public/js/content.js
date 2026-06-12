@@ -11,11 +11,6 @@ const SCHOOL = {
   email:    'contacto@industrialfenner.cl',
   rector:   'Ernesto Uslar Goverts',
 
-  // Coordenadas para el clima – La Unión, Región de Los Ríos
-  lat: -40.2939,
-  lon: -73.0833,
-  weatherCity: 'La Unión, Los Ríos',
-
   historiaIntro:
     'Bienvenido al Liceo Bicentenario Industrial Ingeniero Ricardo Fenner Ruedi, ' +
     'un establecimiento de educación técnico-profesional de La Unión, Región de Los Ríos, ' +

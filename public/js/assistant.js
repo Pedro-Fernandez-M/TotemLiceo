@@ -116,7 +116,7 @@ class FennerAssistant {
     this._addMessage(text, 'user');
     if (this.synth.speaking) this.synth.cancel();
     clearTimeout(this._responseTimer);
-    const answer = this._match(text.toLowerCase()); // string o Promise (ej: clima en vivo)
+    const answer = this._match(text.toLowerCase());
     this._responseTimer = setTimeout(() => {
       Promise.resolve(answer).then(a => this._respond(a));
     }, 380);
@@ -225,6 +225,13 @@ class FennerAssistant {
 
   // ── BASE DE CONOCIMIENTO ───────────────────────────────────────
   _match(t) {
+    // El tótem no entrega información del clima
+    const climaKw = ['clima','temperatura','lluvia','llover','calor','frío','frio'];
+    if (climaKw.some(k => t.includes(k))) {
+      return 'La información del clima no está disponible en este tótem. ' +
+             '¿Te puedo ayudar con una ubicación, las especialidades o la historia del liceo?';
+    }
+
     // Location queries: "dónde está X", "dónde queda X", etc.
     const loc = this._matchLocation(t);
     if (loc) return loc;
@@ -248,10 +255,6 @@ class FennerAssistant {
              `Te estoy mostrando el medallero completo en pantalla.`;
     }
 
-    // Clima: consulta en vivo y responde por voz
-    const climaKw = ['clima','temperatura','lluvia','calor','frío','frio','va a llover'];
-    if (climaKw.some(k => t.includes(k))) return this._climaResponse();
-
     for (const item of this.kb) {
       if (item.kw.some(k => t.includes(k))) return item.r;
     }
@@ -273,25 +276,6 @@ class FennerAssistant {
     return `El ${SCHOOL.name} inició sus actividades en ${SCHOOL.founded} en la ciudad de La Unión, Región de Los Ríos, ` +
       `gracias al impulso de la Fundación Ricardo Fenner Ruedi. Desde entonces hemos formado generaciones de técnicos ` +
       `comprometidos con el desarrollo del país. Te invito a tocar "Nuestra Historia" en el menú para conocer más.`;
-  }
-
-  async _climaResponse() {
-    try {
-      const r = await fetch(`/api/weather?lat=${SCHOOL.lat}&lon=${SCHOOL.lon}`);
-      if (!r.ok) throw new Error();
-      const d = await r.json();
-      if (d.error || !d.current) throw new Error();
-      const c    = d.current;
-      const temp = Math.round(c.temperature_2m);
-      const desc = typeof weatherInfo === 'function'
-        ? weatherInfo(c.weather_code).desc.toLowerCase() : '';
-      return `En este momento en ${SCHOOL.weatherCity} hay ${temp} grados` +
-             (desc ? ` y la condición es ${desc}` : '') +
-             `. La sensación térmica es de ${Math.round(c.apparent_temperature)} grados ` +
-             `y la humedad es del ${c.relative_humidity_2m} por ciento.`;
-    } catch {
-      return 'No pude consultar el clima en este momento. Por favor, inténtalo más tarde.';
-    }
   }
 
   _fallback(t) {

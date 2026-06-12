@@ -27,7 +27,7 @@ Para calibrar coordenadas del mapa: dentro de la sección Mapa, tocar 5 veces se
 
 ## Deploy en Vercel
 
-El proyecto está preparado para Vercel (plan gratuito): el sitio estático se sirve desde `public/`, el clima corre como función serverless (`api/weather.js`) y la lista de fotos se genera en cada build (`vercel.json`).
+El proyecto está preparado para Vercel (plan gratuito): el sitio estático se sirve desde `public/` y la lista de fotos se genera en cada build (`vercel.json`).
 
 1. Subir cambios a GitHub (`git push`).
 2. En [vercel.com](https://vercel.com) → **Add New Project** → importar este repositorio.

@@ -115,7 +115,6 @@ async function openSection(section) {
     historia:       'Nuestra Historia',
     mapa:           'Mapa del Establecimiento',
     logros:         'Logros WorldSkills',
-    clima:          'Clima',
     especialidades: 'Especialidades',
   };
   document.getElementById('content-title').textContent = titles[section] || section;
@@ -136,10 +135,6 @@ async function openSection(section) {
       break;
     case 'especialidades': body.innerHTML = renderEspecialidades(); break;
     case 'logros':         body.innerHTML = renderLogros();         break;
-    case 'clima':
-      body.innerHTML = '<div class="clima-loading"><div class="spinner"></div><span>Cargando clima…</span></div>';
-      loadClima();
-      break;
   }
 }
 
@@ -469,75 +464,6 @@ function renderLogros() {
       <h3 class="lg-subtitle">Otros reconocimientos</h3>
       <div class="lg-otros">${otros}</div>
     </div>`;
-}
-
-// ── CLIMA ────────────────────────────────────────────────────────────
-async function loadClima() {
-  try {
-    const res  = await fetch(`/api/weather?lat=${SCHOOL.lat}&lon=${SCHOOL.lon}`);
-    if (!res.ok) throw new Error();
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
-
-    const c         = data.current;
-    const temp      = Math.round(c.temperature_2m);
-    const feelsLike = Math.round(c.apparent_temperature);
-    const humidity  = c.relative_humidity_2m;
-    const wind      = Math.round(c.wind_speed_10m);
-    const { icon, desc } = weatherInfo(c.weather_code);
-
-    document.getElementById('content-body').innerHTML = `
-      <div class="clima-main">
-        <div class="clima-hero">
-          <div class="clima-icon">${icon}</div>
-          <div>
-            <div class="clima-temp">${temp}<sup>°C</sup></div>
-            <div class="clima-desc">${desc}</div>
-            <div class="clima-city">${SCHOOL.weatherCity}</div>
-          </div>
-        </div>
-        <div class="clima-cards">
-          <div class="clima-card">
-            <div class="cc-icon">🌡️</div>
-            <div class="cc-val">${feelsLike}°C</div>
-            <div class="cc-lbl">Sensación térmica</div>
-          </div>
-          <div class="clima-card">
-            <div class="cc-icon">💧</div>
-            <div class="cc-val">${humidity}%</div>
-            <div class="cc-lbl">Humedad</div>
-          </div>
-          <div class="clima-card">
-            <div class="cc-icon">💨</div>
-            <div class="cc-val">${wind} km/h</div>
-            <div class="cc-lbl">Viento</div>
-          </div>
-        </div>
-      </div>`;
-  } catch {
-    document.getElementById('content-body').innerHTML =
-      `<div class="clima-err">
-         ⚠️ No se pudo cargar el clima.<br/>
-         <small>Verifica la conexión a internet.</small>
-       </div>`;
-  }
-}
-
-function weatherInfo(code) {
-  const map = {
-    0:{icon:'☀️',desc:'Despejado'},1:{icon:'🌤️',desc:'Mayormente despejado'},
-    2:{icon:'⛅',desc:'Parcialmente nublado'},3:{icon:'☁️',desc:'Nublado'},
-    45:{icon:'🌫️',desc:'Neblina'},48:{icon:'🌫️',desc:'Escarcha de niebla'},
-    51:{icon:'🌦️',desc:'Llovizna leve'},53:{icon:'🌦️',desc:'Llovizna moderada'},
-    55:{icon:'🌧️',desc:'Llovizna intensa'},61:{icon:'🌧️',desc:'Lluvia leve'},
-    63:{icon:'🌧️',desc:'Lluvia moderada'},65:{icon:'🌧️',desc:'Lluvia intensa'},
-    71:{icon:'❄️',desc:'Nevada leve'},73:{icon:'❄️',desc:'Nevada moderada'},
-    75:{icon:'❄️',desc:'Nevada intensa'},80:{icon:'🌦️',desc:'Chubascos leves'},
-    81:{icon:'🌧️',desc:'Chubascos moderados'},82:{icon:'⛈️',desc:'Chubascos intensos'},
-    95:{icon:'⛈️',desc:'Tormenta eléctrica'},96:{icon:'⛈️',desc:'Tormenta con granizo'},
-    99:{icon:'⛈️',desc:'Tormenta intensa'},
-  };
-  return map[code] ?? { icon:'🌡️', desc:'Condición desconocida' };
 }
 
 // ── MAPA INTERACTIVO ─────────────────────────────────────────────────

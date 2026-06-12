@@ -7,25 +7,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Weather proxy using Open-Meteo (no API key required)
-app.get('/api/weather', async (req, res) => {
-  const lat = req.query.lat || '-33.4569';
-  const lon = req.query.lon || '-70.6483';
-  try {
-    const url =
-      `https://api.open-meteo.com/v1/forecast` +
-      `?latitude=${lat}&longitude=${lon}` +
-      `&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code` +
-      `&timezone=auto`;
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('upstream error');
-    const data = await response.json();
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: 'Servicio de clima no disponible' });
-  }
-});
-
 // List images for the historia slideshow
 app.get('/api/fotos-historia', (_req, res) => {
   const dir = path.join(__dirname, 'public', 'data', 'fotoshistoria');
