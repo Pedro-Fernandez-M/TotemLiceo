@@ -114,6 +114,7 @@ async function openSection(section) {
   const titles = {
     historia:       'Nuestra Historia',
     mapa:           'Mapa del Establecimiento',
+    logros:         'Logros WorldSkills',
     clima:          'Clima',
     especialidades: 'Especialidades',
   };
@@ -134,6 +135,7 @@ async function openSection(section) {
       initMap();
       break;
     case 'especialidades': body.innerHTML = renderEspecialidades(); break;
+    case 'logros':         body.innerHTML = renderLogros();         break;
     case 'clima':
       body.innerHTML = '<div class="clima-loading"><div class="spinner"></div><span>Cargando clima…</span></div>';
       loadClima();
@@ -405,6 +407,53 @@ function renderMapa() {
           </div>
         </div>
       </div>
+    </div>`;
+}
+
+// ── LOGROS WORLDSKILLS ─────────────────────────────────────────────
+function renderLogros() {
+  const lg = SCHOOL.logros;
+
+  const totals = lg.medallero.reduce(
+    (a, m) => ({ oro: a.oro + m.oro, plata: a.plata + m.plata, bronce: a.bronce + m.bronce }),
+    { oro: 0, plata: 0, bronce: 0 }
+  );
+
+  const medalRow = (n, medal, lbl) => n
+    ? `<span class="lg-medal">${medal} ${n} ${lbl}${n > 1 ? 's' : ''}</span>` : '';
+
+  const cards = lg.medallero.map(m =>
+    `<div class="lg-card">
+       <div class="lg-card-icon">${m.icon}</div>
+       <div class="lg-card-name">${m.skill}</div>
+       <div class="lg-card-medals">
+         ${medalRow(m.oro, '🥇', 'oro')}
+         ${medalRow(m.plata, '🥈', 'plata')}
+         ${medalRow(m.bronce, '🥉', 'bronce')}
+       </div>
+       ${m.extra ? `<div class="lg-card-extra">⭐ ${m.extra}</div>` : ''}
+     </div>`
+  ).join('');
+
+  const otros = lg.otros.map(o =>
+    `<div class="lg-otro">
+       <span class="lg-otro-year">${o.year}</span>
+       <span class="lg-otro-text">${o.text}</span>
+     </div>`
+  ).join('');
+
+  return `
+    <div class="lg-wrap">
+      <p class="lg-intro">${lg.intro}</p>
+      <div class="lg-totals">
+        <div class="lg-total"><span class="lg-total-medal">🥇</span><span class="lg-total-n">${totals.oro}</span><span class="lg-total-lbl">Oro</span></div>
+        <div class="lg-total"><span class="lg-total-medal">🥈</span><span class="lg-total-n">${totals.plata}</span><span class="lg-total-lbl">Plata</span></div>
+        <div class="lg-total"><span class="lg-total-medal">🥉</span><span class="lg-total-n">${totals.bronce}</span><span class="lg-total-lbl">Bronce</span></div>
+      </div>
+      <div class="lg-destacado">${lg.destacado}</div>
+      <div class="lg-grid">${cards}</div>
+      <h3 class="lg-subtitle">Otros reconocimientos</h3>
+      <div class="lg-otros">${otros}</div>
     </div>`;
 }
 

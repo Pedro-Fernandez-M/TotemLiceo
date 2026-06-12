@@ -116,8 +116,10 @@ class FennerAssistant {
     this._addMessage(text, 'user');
     if (this.synth.speaking) this.synth.cancel();
     clearTimeout(this._responseTimer);
-    const answer = this._match(text.toLowerCase());
-    this._responseTimer = setTimeout(() => this._respond(answer), 380);
+    const answer = this._match(text.toLowerCase()); // string o Promise (ej: clima en vivo)
+    this._responseTimer = setTimeout(() => {
+      Promise.resolve(answer).then(a => this._respond(a));
+    }, 380);
   }
 
   _respond(text) {
@@ -233,6 +235,23 @@ class FennerAssistant {
                     'antiguo','antigua','legado','fenner ruedi'];
     if (histKw.some(k => t.includes(k))) return this._historiaResponse();
 
+    // Logros / WorldSkills: responde y abre la sección en pantalla
+    const lgKw = ['worldskills','world skills','medalla','logro','premio','reconocimiento','campeon','campeón'];
+    if (lgKw.some(k => t.includes(k))) {
+      if (typeof openSection === 'function') openSection('logros');
+      const tot = SCHOOL.logros.medallero.reduce(
+        (a, m) => ({ oro: a.oro + m.oro, plata: a.plata + m.plata, bronce: a.bronce + m.bronce }),
+        { oro: 0, plata: 0, bronce: 0 });
+      return `Desde 2012 nuestro liceo ha obtenido ${tot.oro} medallas de oro, ` +
+             `${tot.plata} de plata y ${tot.bronce} de bronce en competencias WorldSkills, ` +
+             `destacando en robótica móvil y electricidad KNX. ` +
+             `Te estoy mostrando el medallero completo en pantalla.`;
+    }
+
+    // Clima: consulta en vivo y responde por voz
+    const climaKw = ['clima','temperatura','lluvia','calor','frío','frio','va a llover'];
+    if (climaKw.some(k => t.includes(k))) return this._climaResponse();
+
     for (const item of this.kb) {
       if (item.kw.some(k => t.includes(k))) return item.r;
     }
@@ -254,6 +273,25 @@ class FennerAssistant {
     return `El ${SCHOOL.name} inició sus actividades en ${SCHOOL.founded} en la ciudad de La Unión, Región de Los Ríos, ` +
       `gracias al impulso de la Fundación Ricardo Fenner Ruedi. Desde entonces hemos formado generaciones de técnicos ` +
       `comprometidos con el desarrollo del país. Te invito a tocar "Nuestra Historia" en el menú para conocer más.`;
+  }
+
+  async _climaResponse() {
+    try {
+      const r = await fetch(`/api/weather?lat=${SCHOOL.lat}&lon=${SCHOOL.lon}`);
+      if (!r.ok) throw new Error();
+      const d = await r.json();
+      if (d.error || !d.current) throw new Error();
+      const c    = d.current;
+      const temp = Math.round(c.temperature_2m);
+      const desc = typeof weatherInfo === 'function'
+        ? weatherInfo(c.weather_code).desc.toLowerCase() : '';
+      return `En este momento en ${SCHOOL.weatherCity} hay ${temp} grados` +
+             (desc ? ` y la condición es ${desc}` : '') +
+             `. La sensación térmica es de ${Math.round(c.apparent_temperature)} grados ` +
+             `y la humedad es del ${c.relative_humidity_2m} por ciento.`;
+    } catch {
+      return 'No pude consultar el clima en este momento. Por favor, inténtalo más tarde.';
+    }
   }
 
   _fallback(t) {
@@ -361,12 +399,6 @@ class FennerAssistant {
         r:  `Para ver el plano del establecimiento, toca "Mapa del Establecimiento" ` +
             `en el menú principal. Desde allí podrás ubicar salas, talleres, el CRA y muchos más sectores. ` +
             `También puedes preguntarme directamente dónde está cualquier lugar.`,
-      },
-      {
-        kw: ['clima','tiempo','temperatura','lluvia','calor','frío','frio'],
-        r:  `Para consultar las condiciones climáticas actuales de La Unión, ` +
-            `toca el botón "Clima" en el menú principal. ` +
-            `Allí encontrarás la temperatura, humedad y velocidad del viento en tiempo real.`,
       },
       {
         kw: ['casino','almuerzo','comida','menu','menú','alimentación'],

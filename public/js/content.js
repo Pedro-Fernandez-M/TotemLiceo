@@ -69,6 +69,31 @@ const SCHOOL = {
     },
   ],
 
+  // Logros WorldSkills y reconocimientos (fuente: historia oficial del liceo)
+  logros: {
+    intro:
+      'Desde 2012, la participación en WorldSkills ha sido uno de los sellos más ' +
+      'distintivos de nuestro liceo, con destacados resultados a nivel nacional e internacional.',
+    medallero: [
+      { skill:'Robótica Móvil',      icon:'🤖', oro:7, plata:1, bronce:1, extra:'2 veces «Mejor de los Mejores»' },
+      { skill:'Electricidad KNX',    icon:'⚡', oro:5, plata:1, bronce:0, extra:'2 veces «Mejor de los Mejores»' },
+      { skill:'Soldadura',           icon:'🔥', oro:1, plata:2, bronce:1, extra:'1 medalla de excelencia' },
+      { skill:'Fontanería',          icon:'🚰', oro:0, plata:3, bronce:0 },
+      { skill:'Edificación',         icon:'🏗️', oro:1, plata:0, bronce:0 },
+      { skill:'Tecnología Mecánica', icon:'⚙️', oro:0, plata:0, bronce:1, extra:'1 medalla de excelencia' },
+    ],
+    destacado:
+      '🏆 WorldSkills Américas 2025 (Chile): medalla de plata en Electricidad KNX ' +
+      'y medalla de bronce en Robótica.',
+    otros: [
+      { year: 2012, text: 'Certificación ambiental de excelencia, vigente hasta hoy.' },
+      { year: 2013, text: 'Premio Regional de Medio Ambiente.' },
+      { year: 2016, text: 'Primer lugar nacional y sexto latinoamericano en los Premios Latinoamérica Verde, categoría energía, con un sistema solar para agua caliente sanitaria.' },
+      { year: 2018, text: 'Primer lugar en las Olimpiadas Nacionales de Mecatrónica FESTO, con acceso a formación internacional en industria 4.0.' },
+      { year: 2019, text: 'Integración a la red de Liceos Bicentenario de Excelencia con el puntaje más alto a nivel nacional.' },
+    ],
+  },
+
   horarios: {
     entrada: '08:00',
     salida:  '17:00',
