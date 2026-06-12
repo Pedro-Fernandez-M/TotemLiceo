@@ -367,15 +367,15 @@ function renderMapa() {
           <button class="mapa-zbn" id="mzoom-out"   title="Alejar">－</button>
           <button class="mapa-zbn" id="mzoom-reset" title="Ver todo">⌂</button>
           <button class="mapa-zbn" id="mzoom-full"  title="Pantalla completa">⛶</button>
-          <button class="mapa-zbn" id="mapa-debug-toggle" title="Modo debug: clic en el mapa para ver coordenadas">🎯</button>
+          <button class="mapa-zbn" id="mapa-debug-toggle" style="display:none"
+                  title="Modo debug: clic en el mapa para ver coordenadas">🎯</button>
           <button class="mapa-emrg-btn" id="mapa-emrg-btn">🚨 Emergencia</button>
         </div>
       </div>
       <div class="mapa-body">
         <div class="mapa-viewport" id="mapa-vp">
           <div class="mapa-canvas" id="mapa-cv">
-            <img src="assets/mapa2026.png" id="mapa-img" draggable="false"
-                 onerror="this.onerror=null;this.src='assets/mapa.png'"
+            <img src="assets/mapa.png" id="mapa-img" draggable="false"
                  alt="Mapa del establecimiento" />
           </div>
           <!-- Pines fuera del canvas: posicionados en coords de viewport -->
@@ -702,7 +702,19 @@ function initMap() {
     if (!document.fullscreenElement) fullBtn.textContent = '⛶';
   });
 
-  // ── Debug toggle ───────────────────────────────────────────────────
+  // ── Debug toggle (oculto: 5 toques rápidos en el texto de ayuda lo revelan) ──
+  let _hintTaps = 0, _hintTapTimer = null;
+  document.querySelector('.mapa-hint').addEventListener('click', () => {
+    _hintTaps++;
+    clearTimeout(_hintTapTimer);
+    _hintTapTimer = setTimeout(() => { _hintTaps = 0; }, 2000);
+    if (_hintTaps >= 5) {
+      _hintTaps = 0;
+      const btn = document.getElementById('mapa-debug-toggle');
+      btn.style.display = btn.style.display === 'none' ? '' : 'none';
+    }
+  });
+
   document.getElementById('mapa-debug-toggle').addEventListener('click', () => {
     debugMode = !debugMode;
     document.getElementById('mapa-debug-toggle').classList.toggle('debug-active', debugMode);

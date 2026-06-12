@@ -165,6 +165,12 @@ class FennerAssistant {
     const locWords = ['donde','ubic','como llego','esta la','esta el','encuentro','hallo','busco','necesito llegar'];
     if (!locWords.some(w => norm.includes(w))) return null;
 
+    // Pregunta por el liceo mismo → entregar la dirección, no el plano interno
+    if (['liceo','colegio','establecimiento','escuela'].some(w => norm.includes(w))) {
+      return `El Liceo se encuentra ubicado en ${SCHOOL.address}. ` +
+             `Si buscas un lugar dentro del establecimiento, también puedo mostrártelo en el mapa.`;
+    }
+
     const sectorDesc = {
       admin:     'en el sector administrativo del establecimiento',
       academic:  'en el sector académico del establecimiento',
@@ -245,9 +251,9 @@ class FennerAssistant {
         return `${excerpt} Te invito a tocar "Nuestra Historia" en el menú para conocer toda nuestra trayectoria.`;
       }
     }
-    return `El ${SCHOOL.name} fue fundado en ${SCHOOL.founded} en la ciudad de La Unión, Región de Los Ríos. ` +
-      `Con más de un siglo de trayectoria, hemos formado generaciones de técnicos comprometidos con el desarrollo del país. ` +
-      `Te invito a tocar "Nuestra Historia" en el menú para conocer más.`;
+    return `El ${SCHOOL.name} inició sus actividades en ${SCHOOL.founded} en la ciudad de La Unión, Región de Los Ríos, ` +
+      `gracias al impulso de la Fundación Ricardo Fenner Ruedi. Desde entonces hemos formado generaciones de técnicos ` +
+      `comprometidos con el desarrollo del país. Te invito a tocar "Nuestra Historia" en el menú para conocer más.`;
   }
 
   _fallback(t) {
@@ -261,7 +267,7 @@ class FennerAssistant {
     ];
     if (specificQ.some(q => norm.includes(q))) {
       return 'No tengo esa información en los datos cargados del liceo. ' +
-             `Te recomiendo consultar directamente en secretaría o llamar al ${SCHOOL.phone}.`;
+             'Te recomiendo consultar directamente en secretaría del establecimiento.';
     }
 
     // Consulta vaga → sugerir categorías
@@ -334,9 +340,9 @@ class FennerAssistant {
       },
       {
         kw: ['rector','director','directora','jefe','autoridad'],
-        r:  `La dirección del establecimiento se encuentra en el sector administrativo, ` +
-            `junto a secretaría. ` +
-            `Secretaría atiende de lunes a viernes, en horario de ${s.horarios.secretaria}.`,
+        r:  `La dirección del establecimiento está a cargo del director, señor ${s.rector}. ` +
+            `Su oficina se encuentra en el sector administrativo, junto a secretaría, ` +
+            `que atiende de ${s.horarios.secretaria}.`,
       },
       {
         kw: ['dirección','direccion','donde queda','ubicación','ubicacion','llegar','cómo llegar'],
@@ -346,9 +352,9 @@ class FennerAssistant {
       },
       {
         kw: ['teléfono','telefono','contacto','comunicar','llamar','correo','email','mail'],
-        r:  `Puedes comunicarte con el establecimiento al teléfono ${s.phone} ` +
-            `o al correo electrónico ${s.email}. ` +
-            `Secretaría atiende de lunes a viernes, de ${s.horarios.secretaria}.`,
+        r:  `Puedes comunicarte con el establecimiento al correo electrónico ${s.email}` +
+            (s.phone ? ` o al teléfono ${s.phone}` : '') + `. ` +
+            `Secretaría atiende de ${s.horarios.secretaria}.`,
       },
       {
         kw: ['mapa','plano','instalaciones','donde está','cancha'],
