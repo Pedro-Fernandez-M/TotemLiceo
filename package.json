@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "fotos": "node scripts/optimizar-fotos.js && node scripts/generar-fotos-json.js",
+    "build": "node scripts/generar-fotos-json.js"
   },
   "dependencies": {
     "express": "^4.18.2"

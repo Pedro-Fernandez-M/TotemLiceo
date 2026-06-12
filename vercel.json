@@ -1,0 +1,7 @@
+{
+  "buildCommand": "node scripts/generar-fotos-json.js",
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/api/fotos-historia", "destination": "/data/fotos.json" }
+  ]
+}
