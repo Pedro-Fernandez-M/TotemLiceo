@@ -10,7 +10,7 @@ let sleeping   = true;
 let mapCleanup = null;
 
 // Historia section state – cleaned up when navigating away
-const hist = { raf: null, slide: null, paused: false, touching: false };
+const hist = { raf: null, slide: null, paused: false, touching: false, photos: [], curr: 0 };
 
 document.addEventListener('DOMContentLoaded', () => {
   assistant = new FennerAssistant();
@@ -19,7 +19,25 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   document.getElementById('back-btn').addEventListener('click', showNav);
   document.getElementById('speak-btn').addEventListener('click', () => assistant.toggle());
+  initLightbox();
 });
+
+// ── VISOR DE FOTO: controles (registrados una vez) ─────────────────
+function initLightbox() {
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox-prev').addEventListener('click', e => { e.stopPropagation(); lightboxNav(-1); });
+  document.getElementById('lightbox-next').addEventListener('click', e => { e.stopPropagation(); lightboxNav(1); });
+  // Tocar el fondo (fuera de la imagen) cierra el visor
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target.id === 'lightbox') closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  lightboxNav(-1);
+    if (e.key === 'ArrowRight') lightboxNav(1);
+  });
+}
 
 // ── RELOJ ──────────────────────────────────────────────────────────
 function startClock() {
@@ -90,6 +108,8 @@ function cleanupHistoria() {
   if (hist.slide) { clearInterval(hist.slide);      hist.slide = null; }
   hist.paused   = false;
   hist.touching = false;
+  hist.photos   = [];
+  closeLightbox();
   document.getElementById('content-body').classList.remove('hist-mode');
 }
 
@@ -255,12 +275,22 @@ function startSlideshow(photos) {
   const dotsEl    = document.getElementById('hist-dots');
   const imgA      = document.getElementById('slide-a');
   const imgB      = document.getElementById('slide-b');
+  const showEl    = document.getElementById('hist-slideshow');
 
   if (!imgA) return;
+
+  hist.photos = photos;
+  hist.curr   = 0;
 
   if (!photos.length) {
     if (emptyEl) emptyEl.style.display = 'flex';
     return;
+  }
+
+  // Tocar el slideshow abre la imagen completa en el visor
+  if (showEl) {
+    showEl.classList.add('clickable');
+    showEl.addEventListener('click', () => openLightbox(hist.curr));
   }
 
   // Counter
@@ -277,6 +307,7 @@ function startSlideshow(photos) {
   let frontIsA  = true;
 
   const updateUI = () => {
+    hist.curr = curr;
     if (counterEl) counterEl.textContent = `${curr + 1} / ${photos.length}`;
     if (dotsEl) dotsEl.querySelectorAll('.hist-dot').forEach((d, i) =>
       d.classList.toggle('active', i === curr)
@@ -317,6 +348,43 @@ function startSlideshow(photos) {
       }, 60);
     }
   }, 4000);
+}
+
+// ── VISOR DE FOTO COMPLETA (LIGHTBOX) ──────────────────────────────
+function openLightbox(index) {
+  if (!hist.photos.length) return;
+  const lb    = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  const lbCnt = document.getElementById('lightbox-counter');
+  if (!lb) return;
+
+  hist.lbIndex = index;
+  hist.paused  = true; // congela el autoavance del slideshow mientras se mira
+
+  const render = () => {
+    lbImg.src = hist.photos[hist.lbIndex];
+    lbCnt.textContent = `${hist.lbIndex + 1} / ${hist.photos.length}`;
+  };
+  render();
+  hist.lbRender = render;
+
+  lb.classList.add('open');
+  const multi = hist.photos.length > 1;
+  document.getElementById('lightbox-prev').style.display = multi ? '' : 'none';
+  document.getElementById('lightbox-next').style.display = multi ? '' : 'none';
+}
+
+function lightboxNav(dir) {
+  const n = hist.photos.length;
+  if (!n) return;
+  hist.lbIndex = (hist.lbIndex + dir + n) % n;
+  if (hist.lbRender) hist.lbRender();
+}
+
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  if (lb) lb.classList.remove('open');
+  hist.paused = false; // reanuda el slideshow
 }
 
 // ── ESPECIALIDADES ─────────────────────────────────────────────────
