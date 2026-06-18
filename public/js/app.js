@@ -2,10 +2,13 @@
    APP – Lógica principal del kiosk
    ────────────────────────────────────────────────────────────── */
 
-const IDLE_MS = 60_000;
+const IDLE_MS  = 150_000; // 2.5 min de inactividad antes de avisar
+const WARN_MS  = 20_000;  // cuenta regresiva del aviso "¿Sigues ahí?"
 
 let assistant;
 let idleTimer  = null;
+let warnTimer  = null;
+let warnInterval = null;
 let sleeping   = true;
 let mapCleanup = null;
 
@@ -20,7 +23,59 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('back-btn').addEventListener('click', showNav);
   document.getElementById('speak-btn').addEventListener('click', () => assistant.toggle());
   initLightbox();
+  initFaqChips();
+  initKioskGuards();
 });
+
+// ── BLINDAJE MODO KIOSKO ───────────────────────────────────────────
+function initKioskGuards() {
+  // Sin menú contextual (clic derecho / mantener presionado)
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  // Sin arrastrar imágenes
+  document.addEventListener('dragstart', e => e.preventDefault());
+  // Bloquear zoom por gesto (Safari/iOS) y por Ctrl+rueda
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(ev =>
+    document.addEventListener(ev, e => e.preventDefault())
+  );
+  document.addEventListener('wheel', e => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
+  // Bloquear doble-toque que hace zoom en algunos navegadores
+  let lastTouch = 0;
+  document.addEventListener('touchend', e => {
+    const now = Date.now();
+    if (now - lastTouch <= 300) e.preventDefault();
+    lastTouch = now;
+  }, { passive: false });
+}
+
+function tryFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen?.().catch(() => {});
+  }
+}
+
+// ── PREGUNTAS FRECUENTES (TOCABLES) ────────────────────────────────
+const FAQ = [
+  { label: '⚙️ Especialidades', q: '¿Qué especialidades hay?' },
+  { label: '📋 Matrícula',      q: '¿Cómo es la matrícula?' },
+  { label: '🕐 Horarios',       q: '¿Cuál es el horario?' },
+  { label: '🏆 Logros',         q: '¿Qué logros WorldSkills tienen?' },
+  { label: '📜 Historia',       q: 'Cuéntame la historia del liceo' },
+  { label: '📍 Secretaría',     q: '¿Dónde está la secretaría?' },
+];
+
+function initFaqChips() {
+  const wrap = document.getElementById('faq-chips');
+  if (!wrap) return;
+  wrap.innerHTML = FAQ.map((f, i) =>
+    `<button class="faq-chip" data-i="${i}">${f.label}</button>`
+  ).join('');
+  wrap.querySelectorAll('.faq-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const f = FAQ[+chip.dataset.i];
+      if (f && assistant) assistant.ask(f.q);
+    });
+  });
+}
 
 // ── VISOR DE FOTO: controles (registrados una vez) ─────────────────
 function initLightbox() {
@@ -65,12 +120,36 @@ function initIdle() {
   ['click', 'touchstart', 'keydown'].forEach(ev =>
     document.addEventListener(ev, resetIdleTimer, { passive: true })
   );
+  // Desplazarse leyendo también cuenta como actividad
+  document.addEventListener('scroll', resetIdleTimer, { passive: true, capture: true });
+
+  document.getElementById('idle-warn-btn').addEventListener('click', resetIdleTimer);
   window.resetIdleTimer = resetIdleTimer;
+}
+
+function showIdleWarning() {
+  const warn  = document.getElementById('idle-warn');
+  const count = document.getElementById('idle-warn-count');
+  let remaining = Math.round(WARN_MS / 1000);
+  count.textContent = remaining;
+  warn.classList.add('open');
+  warnInterval = setInterval(() => {
+    remaining -= 1;
+    count.textContent = Math.max(0, remaining);
+  }, 1000);
+  warnTimer = setTimeout(goToSleep, WARN_MS);
+}
+
+function hideIdleWarning() {
+  clearTimeout(warnTimer);     warnTimer = null;
+  clearInterval(warnInterval); warnInterval = null;
+  document.getElementById('idle-warn').classList.remove('open');
 }
 
 function wakeUp() {
   if (!sleeping) return;
   sleeping = false;
+  tryFullscreen(); // el toque que despierta es un gesto válido para pantalla completa
   const overlay = document.getElementById('idle-overlay');
   const app     = document.getElementById('app');
   overlay.classList.add('hidden');
@@ -81,6 +160,7 @@ function wakeUp() {
 
 function goToSleep() {
   sleeping = true;
+  hideIdleWarning();
   if (window.speechSynthesis) window.speechSynthesis.cancel();
   showNav();
   const overlay = document.getElementById('idle-overlay');
@@ -92,8 +172,9 @@ function goToSleep() {
 
 function resetIdleTimer() {
   if (sleeping) return;
+  hideIdleWarning();
   clearTimeout(idleTimer);
-  idleTimer = setTimeout(goToSleep, IDLE_MS);
+  idleTimer = setTimeout(showIdleWarning, IDLE_MS);
 }
 
 // ── NAVEGACIÓN ─────────────────────────────────────────────────────
@@ -466,7 +547,7 @@ function renderMapa() {
         <div class="mapa-sidebar">
           <div class="mapa-search-wrap">
             <input type="text" class="mapa-search" id="mapa-search"
-                   placeholder="🔍 Buscar…" autocomplete="off" />
+                   placeholder="🔍 Buscar…" autocomplete="off" readonly inputmode="none" />
           </div>
           <div class="mapa-loc-list" id="mapa-loc-list">${listHtml}</div>
         </div>
@@ -484,7 +565,25 @@ function renderMapa() {
           </div>
         </div>
       </div>
+      <div class="mapa-kbd" id="mapa-kbd">${renderKeyboard()}</div>
     </div>`;
+}
+
+// Teclado en pantalla para el buscador (el tótem no tiene teclado físico)
+function renderKeyboard() {
+  const rows = ['QWERTYUIOP', 'ASDFGHJKLÑ', 'ZXCVBNM'];
+  const keys = rows.map(r =>
+    `<div class="kbd-row">` +
+    [...r].map(k => `<button class="kbd-key" data-k="${k}">${k}</button>`).join('') +
+    `</div>`
+  ).join('');
+  return keys +
+    `<div class="kbd-row">
+       <button class="kbd-key kbd-wide" data-act="space">Espacio</button>
+       <button class="kbd-key kbd-fn" data-act="back">⌫</button>
+       <button class="kbd-key kbd-fn" data-act="clear">Limpiar</button>
+       <button class="kbd-key kbd-done" data-act="done">✓ Listo</button>
+     </div>`;
 }
 
 // ── LOGROS WORLDSKILLS ─────────────────────────────────────────────
@@ -806,20 +905,49 @@ function initMap() {
     item.addEventListener('touchend', e => { e.preventDefault(); handler(); });
   });
 
-  // ── Search ─────────────────────────────────────────────────────────
+  // ── Search + teclado en pantalla ────────────────────────────────────
   const searchInput = document.getElementById('mapa-search');
   const locList     = document.getElementById('mapa-loc-list');
-  searchInput.addEventListener('input', () => {
-    const q = searchInput.value.trim().toLowerCase();
+  const kbd         = document.getElementById('mapa-kbd');
+
+  const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const applyFilter = () => {
+    const q = norm(searchInput.value.trim());
     locList.querySelectorAll('.mapa-loc-item').forEach(el => {
-      el.classList.toggle('mapa-hidden', !!q && !el.dataset.label.toLowerCase().includes(q));
+      el.classList.toggle('mapa-hidden', !!q && !norm(el.dataset.label).includes(q));
     });
     locList.querySelectorAll('.mapa-cat-hdr').forEach(hdr => {
       const hasVisible = [...locList.querySelectorAll(`.mapa-loc-item[data-cat="${hdr.dataset.cat}"]`)]
         .some(el => !el.classList.contains('mapa-hidden'));
       hdr.classList.toggle('mapa-hidden', !hasVisible);
     });
+  };
+
+  const showKbd = (on) => kbd.classList.toggle('open', on);
+
+  // Abrir el teclado al tocar el buscador
+  searchInput.addEventListener('click', () => showKbd(true));
+  searchInput.addEventListener('focus', () => showKbd(true));
+
+  kbd.addEventListener('click', e => {
+    const key = e.target.closest('.kbd-key');
+    if (!key) return;
+    const act = key.dataset.act;
+    if (act === 'done')       { showKbd(false); return; }
+    if (act === 'clear')      searchInput.value = '';
+    else if (act === 'back')  searchInput.value = searchInput.value.slice(0, -1);
+    else if (act === 'space') searchInput.value += ' ';
+    else if (key.dataset.k)   searchInput.value += key.dataset.k.toLowerCase();
+    applyFilter();
   });
+
+  // Tocar fuera del buscador/teclado lo cierra
+  const _onDocClickKbd = e => {
+    if (!kbd.classList.contains('open')) return;
+    if (e.target.closest('#mapa-kbd') || e.target.closest('#mapa-search')) return;
+    showKbd(false);
+  };
+  document.addEventListener('click', _onDocClickKbd);
 
   // ── Emergency panel ────────────────────────────────────────────────
   const emrgBtn   = document.getElementById('mapa-emrg-btn');
@@ -860,6 +988,7 @@ function initMap() {
   mapCleanup = () => {
     document.removeEventListener('mousemove', _onMouseMove);
     document.removeEventListener('mouseup',  _onMouseUp);
+    document.removeEventListener('click', _onDocClickKbd);
     window.removeEventListener('resize', _onResize);
     window.highlightMapZone = null;
   };

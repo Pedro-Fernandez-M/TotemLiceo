@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Kiosk – Liceo Industrial Fenner</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -119,12 +119,24 @@
             <span id="speak-lbl">Hablar con FENNER</span>
           </button>
 
-          <p class="ast-hint">Presiona el botón y habla claramente</p>
+          <p class="ast-hint">Presiona el botón y habla — o toca una pregunta</p>
+
+          <div id="faq-chips" class="faq-chips"></div>
         </div>
 
       </aside>
     </div><!-- /body-layout -->
   </div><!-- /app -->
+
+  <!-- ── AVISO DE INACTIVIDAD ──────────────────────────────────── -->
+  <div id="idle-warn" class="idle-warn">
+    <div class="idle-warn-box">
+      <div class="idle-warn-icon">👋</div>
+      <h2 class="idle-warn-title">¿Sigues ahí?</h2>
+      <p class="idle-warn-text">Volveré a la pantalla de inicio en <span id="idle-warn-count">20</span> segundos.</p>
+      <button id="idle-warn-btn" class="idle-warn-btn">Sí, sigo aquí</button>
+    </div>
+  </div>
 
   <!-- ── VISOR DE FOTO COMPLETA ────────────────────────────────── -->
   <div id="lightbox" class="lightbox">

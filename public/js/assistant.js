@@ -111,6 +111,12 @@ class FennerAssistant {
     document.getElementById('ast-dot').className = 'ast-dot dot-idle';
   }
 
+  // ── PREGUNTA TOCABLE (preguntas frecuentes) ───────────────────
+  ask(text) {
+    if (this.isListening) { this._setIdle(); try { this.recognition.stop(); } catch(_) {} }
+    this._handleInput(text);
+  }
+
   // ── PROCESAR ENTRADA ───────────────────────────────────────────
   _handleInput(text) {
     this._addMessage(text, 'user');

@@ -36,8 +36,11 @@ html, body {
   background: var(--bg);
   color: var(--txt);
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  overscroll-behavior: none;
 }
 
 /* ─── IDLE OVERLAY ─────────────────────────────────────────────── */
@@ -213,7 +216,7 @@ html, body {
 
 /* ─── MAPA ───────────────────────────────────────────────────────── */
 /* Layout principal */
-.mapa-wrap { height:100%; display:flex; flex-direction:column; gap:8px; overflow:hidden; }
+.mapa-wrap { height:100%; display:flex; flex-direction:column; gap:8px; overflow:hidden; position:relative; }
 
 /* Toolbar */
 .mapa-toolbar {
@@ -224,10 +227,10 @@ html, body {
 .mapa-controls { display:flex; gap:5px; align-items:center; flex-shrink:0; }
 
 .mapa-zbn {
-  width:38px; height:38px; flex-shrink:0;
+  width:46px; height:46px; flex-shrink:0;
   background:var(--bg3); border:1px solid var(--border);
   color:var(--txt); border-radius:var(--r);
-  font-size:1.05rem; cursor:pointer; font-family:var(--font);
+  font-size:1.25rem; cursor:pointer; font-family:var(--font);
   display:flex; align-items:center; justify-content:center;
   transition:var(--transition);
 }
@@ -235,9 +238,9 @@ html, body {
 .mapa-zbn:active { transform:scale(.92); }
 
 .mapa-emrg-btn {
-  height:38px; padding:0 12px; flex-shrink:0;
+  height:46px; padding:0 16px; flex-shrink:0;
   background:rgba(215,58,73,.10); border:1px solid rgba(215,58,73,.30);
-  color:#f08090; border-radius:var(--r); font-size:.78rem; font-weight:700;
+  color:#f08090; border-radius:var(--r); font-size:.9rem; font-weight:700;
   cursor:pointer; display:flex; align-items:center; gap:5px;
   transition:var(--transition);
 }
@@ -359,17 +362,18 @@ html, body {
 
 /* Sidebar de ubicaciones */
 .mapa-sidebar {
-  width:190px; flex-shrink:0;
+  width:215px; flex-shrink:0;
   display:flex; flex-direction:column;
   background:var(--bg2); border-radius:var(--rl);
   border:1px solid var(--border); overflow:hidden;
 }
 .mapa-search-wrap { padding:9px; border-bottom:1px solid var(--border); flex-shrink:0; }
 .mapa-search {
-  width:100%; padding:7px 11px; box-sizing:border-box;
+  width:100%; padding:11px 13px; box-sizing:border-box;
   background:var(--bg3); border:1px solid var(--border);
-  border-radius:var(--r); color:var(--txt); font-size:.82rem;
+  border-radius:var(--r); color:var(--txt); font-size:.95rem;
   font-family:var(--font); outline:none; transition:border-color .2s;
+  cursor:pointer;
 }
 .mapa-search:focus { border-color:var(--blue); }
 .mapa-search::placeholder { color:var(--txt3); }
@@ -379,21 +383,21 @@ html, body {
 .mapa-loc-list::-webkit-scrollbar-thumb { background:var(--bg3h); border-radius:2px; }
 
 .mapa-cat-hdr {
-  padding:8px 10px 3px 12px; font-size:.65rem; font-weight:700;
+  padding:10px 10px 4px 12px; font-size:.76rem; font-weight:700;
   text-transform:uppercase; letter-spacing:.07em; color:var(--txt3);
   border-left:2px solid transparent; margin-left:2px;
 }
 .mapa-loc-item {
-  display:flex; align-items:center; gap:7px;
-  padding:7px 9px; border-radius:8px; cursor:pointer;
-  transition:background .14s; font-size:.8rem; color:var(--txt2);
+  display:flex; align-items:center; gap:9px; min-height:46px;
+  padding:10px 11px; border-radius:8px; cursor:pointer;
+  transition:background .14s; font-size:.98rem; color:var(--txt2);
   border:1px solid transparent;
 }
 .mapa-loc-item:hover  { background:var(--bg3h); color:var(--txt); }
 .mapa-loc-item.active { background:rgba(33,136,255,.14); border-color:rgba(33,136,255,.3); color:var(--blue); }
 .mapa-loc-item.mapa-hidden { display:none; }
 .mapa-cat-hdr.mapa-hidden  { display:none; }
-.mapa-loc-ico  { font-size:.88rem; flex-shrink:0; width:17px; text-align:center; }
+.mapa-loc-ico  { font-size:1.1rem; flex-shrink:0; width:20px; text-align:center; }
 .mapa-loc-name { flex:1; line-height:1.25; }
 .mapa-loc-count {
   flex-shrink:0; min-width:18px; text-align:center;
@@ -464,13 +468,13 @@ html, body {
   background: var(--bg3h); border-color: var(--blue);
   transform: translateY(-2px); box-shadow: var(--shadow);
 }
-.esp-icon { font-size: 2.3rem; margin-bottom: 10px; }
-.esp-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
-.esp-desc { font-size: .82rem; color: var(--txt2); line-height: 1.55; }
+.esp-icon { font-size: 2.6rem; margin-bottom: 10px; }
+.esp-name { font-size: 1.28rem; font-weight: 700; margin-bottom: 8px; }
+.esp-desc { font-size: 1.02rem; color: var(--txt); line-height: 1.55; }
 .esp-badge {
   display: inline-block; margin-top: 10px;
   background: rgba(33,136,255,.15); color: var(--blue);
-  padding: 3px 10px; border-radius: 12px; font-size: .72rem; font-weight: 600;
+  padding: 4px 12px; border-radius: 12px; font-size: .85rem; font-weight: 600;
 }
 
 /* ─── RIGHT PANEL ───────────────────────────────────────────────── */
@@ -743,7 +747,7 @@ html, body {
 /* ─── LOGROS WORLDSKILLS ─────────────────────────────────────────── */
 .lg-wrap { display: flex; flex-direction: column; gap: 16px; animation: fadeUp .4s ease; }
 
-.lg-intro { font-size: .92rem; color: var(--txt2); line-height: 1.6; }
+.lg-intro { font-size: 1.08rem; color: var(--txt); line-height: 1.6; }
 
 .lg-totals { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 .lg-total {
@@ -758,7 +762,7 @@ html, body {
 .lg-destacado {
   background: rgba(219,171,9,.1); border: 1px solid rgba(219,171,9,.35);
   border-radius: var(--r); padding: 14px 16px;
-  font-size: .92rem; line-height: 1.5;
+  font-size: 1.05rem; line-height: 1.5;
 }
 
 .lg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -771,17 +775,17 @@ html, body {
   background: var(--bg3h); border-color: var(--yellow);
   transform: translateY(-2px); box-shadow: var(--shadow);
 }
-.lg-card-icon   { font-size: 2.1rem; margin-bottom: 8px; }
-.lg-card-name   { font-size: 1.02rem; font-weight: 700; margin-bottom: 8px; }
+.lg-card-icon   { font-size: 2.3rem; margin-bottom: 8px; }
+.lg-card-name   { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
 .lg-card-medals { display: flex; flex-wrap: wrap; gap: 6px; }
 .lg-medal {
   background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 20px; padding: 3px 10px;
-  font-size: .78rem; white-space: nowrap;
+  border-radius: 20px; padding: 4px 11px;
+  font-size: .92rem; white-space: nowrap;
 }
-.lg-card-extra { margin-top: 9px; font-size: .78rem; color: var(--yellow); }
+.lg-card-extra { margin-top: 9px; font-size: .92rem; color: var(--yellow); }
 
-.lg-subtitle { font-size: 1rem; font-weight: 700; margin-top: 4px; }
+.lg-subtitle { font-size: 1.18rem; font-weight: 700; margin-top: 4px; }
 .lg-otros    { display: flex; flex-direction: column; gap: 8px; }
 .lg-otro {
   display: flex; align-items: baseline; gap: 12px;
@@ -790,9 +794,9 @@ html, body {
 }
 .lg-otro-year {
   font-weight: 800; color: var(--yellow);
-  font-size: .9rem; flex-shrink: 0;
+  font-size: 1.02rem; flex-shrink: 0;
 }
-.lg-otro-text { font-size: .85rem; color: var(--txt2); line-height: 1.5; }
+.lg-otro-text { font-size: 1rem; color: var(--txt); line-height: 1.5; }
 
 /* ─── VISOR DE FOTO COMPLETA (LIGHTBOX) ──────────────────────────── */
 .lightbox {
@@ -840,6 +844,72 @@ html, body {
   background: rgba(0,0,0,.55); color: rgba(255,255,255,.9);
   font-size: .9rem; padding: 6px 16px; border-radius: 20px;
   letter-spacing: .5px;
+}
+
+/* ─── PREGUNTAS FRECUENTES (CHIPS) ───────────────────────────────── */
+.faq-chips {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 12px; justify-content: center;
+}
+.faq-chip {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--txt); border-radius: 22px;
+  padding: 10px 15px; font-size: .92rem; font-weight: 600;
+  font-family: var(--font); cursor: pointer;
+  transition: background .15s, border-color .15s, transform .12s;
+}
+.faq-chip:hover  { background: var(--bg3h); border-color: var(--blue); }
+.faq-chip:active { transform: scale(.95); }
+
+/* ─── AVISO DE INACTIVIDAD ───────────────────────────────────────── */
+.idle-warn {
+  position: fixed; inset: 0; z-index: 9500;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(5,8,14,.82); backdrop-filter: blur(3px);
+}
+.idle-warn.open { display: flex; animation: fadeUp .25s ease; }
+.idle-warn-box {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--rxl); padding: 40px 48px; text-align: center;
+  box-shadow: var(--shadow); max-width: 420px;
+}
+.idle-warn-icon  { font-size: 3.4rem; }
+.idle-warn-title { font-size: 1.7rem; font-weight: 800; margin: 12px 0 8px; }
+.idle-warn-text  { font-size: 1.05rem; color: var(--txt2); margin-bottom: 22px; }
+.idle-warn-text span { color: var(--blue); font-weight: 700; }
+.idle-warn-btn {
+  background: linear-gradient(140deg,#1565c0,#0288d1); color: #fff;
+  border: none; border-radius: 26px; cursor: pointer;
+  padding: 15px 34px; font-size: 1.1rem; font-weight: 700;
+  font-family: var(--font); transition: transform .12s;
+}
+.idle-warn-btn:active { transform: scale(.96); }
+
+/* ─── TECLADO EN PANTALLA (BUSCADOR DEL MAPA) ────────────────────── */
+.mapa-kbd {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 40;
+  background: var(--bg2); border-top: 1px solid var(--border);
+  border-radius: var(--rl) var(--rl) 0 0;
+  padding: 12px; gap: 8px; flex-direction: column;
+  box-shadow: 0 -8px 30px rgba(0,0,0,.5);
+  display: none;
+}
+.mapa-kbd.open { display: flex; animation: fadeUp .2s ease; }
+.kbd-row { display: flex; gap: 7px; justify-content: center; }
+.kbd-key {
+  flex: 1; min-width: 0; max-width: 62px; height: 50px;
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--txt); border-radius: 9px;
+  font-size: 1.1rem; font-weight: 600; font-family: var(--font);
+  cursor: pointer; transition: background .1s, transform .08s;
+}
+.kbd-key:hover  { background: var(--bg3h); }
+.kbd-key:active { transform: scale(.93); background: var(--blue); color: #fff; }
+.kbd-wide { max-width: none; flex: 3; }
+.kbd-fn   { max-width: 110px; flex: 1.4; font-size: .95rem; }
+.kbd-done {
+  max-width: 130px; flex: 1.6; font-size: 1rem; font-weight: 700;
+  background: rgba(33,136,255,.16); border-color: rgba(33,136,255,.4); color: var(--blue);
 }
 
 /* ─── KEYFRAMES ──────────────────────────────────────────────────── */
