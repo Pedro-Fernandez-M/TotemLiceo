@@ -917,26 +917,7 @@ html, body {
   background: rgba(33,136,255,.16); border-color: rgba(33,136,255,.4); color: var(--blue);
 }
 
-/* ─── VIDEO DE INTRO (AL DESBLOQUEAR) ────────────────────────────── */
-.intro-video {
-  position: fixed; inset: 0; z-index: 9600;
-  background: #0a0e1a;
-  display: none; align-items: center; justify-content: center;
-}
-.intro-video.open { display: flex; animation: fadeIn .3s ease; }
-.intro-video video {
-  width: 100%; height: 100%; object-fit: contain;
-}
-.intro-skip {
-  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
-  background: rgba(255,255,255,.12); color: rgba(255,255,255,.85);
-  border: 1px solid rgba(255,255,255,.2); border-radius: 20px;
-  padding: 7px 18px; font-size: .85rem; letter-spacing: .3px;
-  animation: blink 2.2s ease-in-out infinite;
-}
-
 /* ─── KEYFRAMES ──────────────────────────────────────────────────── */
-@keyframes fadeIn  { from{opacity:0} to{opacity:1} }
 @keyframes floaty  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 @keyframes fadeUp  { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 @keyframes slideIn { from{opacity:0;transform:translateX(-16px)} to{opacity:1;transform:none} }

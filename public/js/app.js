@@ -155,39 +155,12 @@ function wakeUp() {
   overlay.classList.add('hidden');
   app.classList.remove('app-hidden');
   setTimeout(() => { overlay.style.display = 'none'; }, 650);
-  playIntro();
   resetIdleTimer();
-}
-
-// ── VIDEO DE INTRO (clip corto al desbloquear) ─────────────────────
-function playIntro() {
-  const wrap = document.getElementById('intro-video');
-  const vid  = document.getElementById('intro-vid');
-  if (!wrap || !vid) return;
-
-  let done = false;
-  const finish = () => {
-    if (done) return;
-    done = true;
-    wrap.classList.remove('open');
-    try { vid.pause(); } catch (_) {}
-  };
-
-  wrap.classList.add('open');
-  try { vid.currentTime = 0; } catch (_) {}
-  vid.muted = true;
-  const p = vid.play();
-  if (p && p.catch) p.catch(finish); // si el navegador no lo reproduce, seguir sin bloquear
-
-  vid.onended = finish;
-  wrap.onclick = finish;             // tocar salta el video
-  setTimeout(finish, 6000);          // tope de seguridad
 }
 
 function goToSleep() {
   sleeping = true;
   hideIdleWarning();
-  document.getElementById('intro-video').classList.remove('open');
   if (window.speechSynthesis) window.speechSynthesis.cancel();
   showNav();
   const overlay = document.getElementById('idle-overlay');
