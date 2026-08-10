@@ -55,19 +55,22 @@ html, body {
 
 .idle-content { text-align: center; animation: fadeUp .9s ease; }
 
-.idle-logo-wrap { margin-bottom: 20px; }
-.idle-logo {
-  width: 110px; height: 110px; border-radius: 50%; margin: 0 auto;
-  background: linear-gradient(135deg, var(--blue-dark), var(--cyan));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.2rem; font-weight: 900; color: #fff;
-  box-shadow: 0 0 60px rgba(33,136,255,.35);
-  animation: glow 3s ease-in-out infinite;
+.idle-logo-wrap { margin-bottom: 22px; }
+.idle-crest {
+  height: 200px; width: auto; margin: 0 auto; display: block;
+  filter: drop-shadow(0 0 45px rgba(33,136,255,.28));
+  animation: floaty 4s ease-in-out infinite;
 }
 .idle-school-name {
-  font-size: 2.8rem; font-weight: 700; color: #fff;
-  margin-bottom: 14px; letter-spacing: -.3px;
+  font-size: 2.3rem; font-weight: 700; color: #fff;
+  margin-bottom: 14px; letter-spacing: -.3px; line-height: 1.25;
 }
+.idle-partners {
+  display: flex; align-items: center; justify-content: center; gap: 26px;
+  margin-top: 40px;
+}
+.idle-partners img { height: 46px; width: auto; opacity: .9; }
+.idle-partners-sep { width: 1px; height: 36px; background: var(--border); }
 .idle-time {
   font-size: 5.5rem; font-weight: 200;
   color: var(--blue); letter-spacing: 4px;
@@ -107,14 +110,16 @@ html, body {
   box-shadow: 0 2px 12px rgba(0,0,0,.3);
 }
 .topbar-brand { display: flex; align-items: center; gap: 14px; }
-.topbar-logo {
-  width: 48px; height: 48px; border-radius: var(--r); flex-shrink: 0;
-  background: linear-gradient(135deg, var(--blue-dark), var(--cyan));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; font-weight: 900; color: #fff;
+.topbar-crest {
+  height: 56px; width: auto; flex-shrink: 0;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,.4));
 }
 .topbar-name  { display: block; font-size: 1.35rem; font-weight: 700; }
 .topbar-tagline { display: block; font-size: .78rem; color: var(--txt2); }
+.topbar-partners {
+  display: flex; align-items: center; gap: 20px;
+}
+.topbar-partners img { height: 34px; width: auto; opacity: .85; }
 .topbar-clock { text-align: right; }
 .hdr-time {
   display: block; font-size: 1.9rem; font-weight: 300;
@@ -912,7 +917,27 @@ html, body {
   background: rgba(33,136,255,.16); border-color: rgba(33,136,255,.4); color: var(--blue);
 }
 
+/* ─── VIDEO DE INTRO (AL DESBLOQUEAR) ────────────────────────────── */
+.intro-video {
+  position: fixed; inset: 0; z-index: 9600;
+  background: #0a0e1a;
+  display: none; align-items: center; justify-content: center;
+}
+.intro-video.open { display: flex; animation: fadeIn .3s ease; }
+.intro-video video {
+  width: 100%; height: 100%; object-fit: contain;
+}
+.intro-skip {
+  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+  background: rgba(255,255,255,.12); color: rgba(255,255,255,.85);
+  border: 1px solid rgba(255,255,255,.2); border-radius: 20px;
+  padding: 7px 18px; font-size: .85rem; letter-spacing: .3px;
+  animation: blink 2.2s ease-in-out infinite;
+}
+
 /* ─── KEYFRAMES ──────────────────────────────────────────────────── */
+@keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+@keyframes floaty  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 @keyframes fadeUp  { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 @keyframes slideIn { from{opacity:0;transform:translateX(-16px)} to{opacity:1;transform:none} }
 @keyframes ripple  { 0%{transform:scale(1);opacity:1} 100%{transform:scale(2.6);opacity:0} }

@@ -261,6 +261,16 @@ class FennerAssistant {
              `Te estoy mostrando el medallero completo en pantalla.`;
     }
 
+    // Matrícula / admisión tiene prioridad (la palabra "cuándo" también
+    // aparece en horarios, así evitamos que se confundan)
+    const matriKw = ['matricula','matrícula','postula','admisi','inscri','vacante'];
+    if (matriKw.some(k => t.includes(k))) {
+      return `El primer periodo de postulación es del 4 al 27 de agosto. ` +
+             `Para postular, es necesario haber cursado 8° básico o 1° medio ` +
+             `y presentar certificado de notas, cédula de identidad y fotografías. ` +
+             `Puedes acercarte a secretaría para recibir más información.`;
+    }
+
     for (const item of this.kb) {
       if (item.kw.some(k => t.includes(k))) return item.r;
     }
@@ -360,8 +370,8 @@ class FennerAssistant {
             `Los talleres prácticos pueden tener horarios diferenciados según la especialidad.`,
       },
       {
-        kw: ['matrícula','matricula','inscripción','inscripcion','postular','ingresar','requisito'],
-        r:  `El proceso de matrícula se lleva a cabo entre noviembre y enero. ` +
+        kw: ['matrícula','matricula','inscripción','inscripcion','postular','ingresar','requisito','postulación','postulacion','admisión','admision'],
+        r:  `El primer periodo de postulación es del 4 al 27 de agosto. ` +
             `Para postular, es necesario haber cursado 8° básico o 1° medio ` +
             `y presentar certificado de notas, cédula de identidad y fotografías. ` +
             `Puedes acercarte a secretaría para recibir más información.`,

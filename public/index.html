@@ -15,14 +15,20 @@
   <div id="idle-overlay">
     <div class="idle-content">
       <div class="idle-logo-wrap">
-        <div class="idle-logo">LIF</div>
+        <img class="idle-crest" src="assets/logo-liceo.png"
+             alt="Liceo Bicentenario Industrial Ingeniero Ricardo Fenner Ruedi" />
       </div>
-      <h1 class="idle-school-name">Liceo Industrial Fenner</h1>
+      <h1 class="idle-school-name">Liceo Bicentenario Industrial<br/>Ingeniero Ricardo Fenner Ruedi</h1>
       <div id="idle-time" class="idle-time">00:00</div>
       <div id="idle-date" class="idle-date">Cargando…</div>
       <div class="idle-touch-hint">
         <div class="idle-ripple"></div>
         <span>Toca la pantalla para comenzar</span>
+      </div>
+      <div class="idle-partners">
+        <img src="assets/logo-sna.png" alt="SNA Educa" />
+        <span class="idle-partners-sep"></span>
+        <img src="assets/logo-innovacion.png" alt="Centro de Innovación" />
       </div>
     </div>
   </div>
@@ -33,11 +39,16 @@
     <!-- Cabecera -->
     <header class="topbar">
       <div class="topbar-brand">
-        <div class="topbar-logo">LIF</div>
+        <img class="topbar-crest" src="assets/logo-liceo.png"
+             alt="Liceo Bicentenario Industrial Ingeniero Ricardo Fenner Ruedi" />
         <div class="topbar-text">
           <span class="topbar-name">Liceo Industrial Fenner</span>
           <span class="topbar-tagline">Formando técnicos desde 1996</span>
         </div>
+      </div>
+      <div class="topbar-partners">
+        <img src="assets/logo-sna.png" alt="SNA Educa" />
+        <img src="assets/logo-innovacion.png" alt="Centro de Innovación" />
       </div>
       <div class="topbar-clock">
         <span id="hdr-time" class="hdr-time">00:00</span>
@@ -130,6 +141,12 @@
       </aside>
     </div><!-- /body-layout -->
   </div><!-- /app -->
+
+  <!-- ── VIDEO DE INTRO (AL DESBLOQUEAR) ───────────────────────── -->
+  <div id="intro-video" class="intro-video">
+    <video id="intro-vid" src="assets/intro.mp4" muted playsinline preload="auto"></video>
+    <div class="intro-skip">Toca para continuar</div>
+  </div>
 
   <!-- ── AVISO DE INACTIVIDAD ──────────────────────────────────── -->
   <div id="idle-warn" class="idle-warn">
