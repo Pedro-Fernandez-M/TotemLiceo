@@ -144,6 +144,14 @@ const SCHOOL = {
           'Selecciones de básquetbol, fútbol, futsal, vóleibol, handball, tenis de mesa y atletismo, con presencia constante en el pódium de los Juegos Escolares del IND.',
         ],
       },
+      {
+        icon: '📈', titulo: 'Crecimiento e Infraestructura',
+        items: [
+          'De 90 estudiantes en 1996 a más de 900 en 2026, distribuidos en 23 cursos de enseñanza media.',
+          'Internado con 443 estudiantes; el Internado de Damas, inaugurado en 2018, cuenta con capacidad para 78.',
+          'Parte de la Red Futuro TP de la Región de Los Ríos desde 2024, red colaborativa de la Educación Media Técnico Profesional.',
+        ],
+      },
     ],
   },
 
