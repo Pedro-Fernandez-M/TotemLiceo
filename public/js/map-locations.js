@@ -22,7 +22,7 @@ const MAP_LOCATIONS = [
   { id:'cra',               label:'CRA',                      category:'academic', icon:'📚', x:54.13, y:83.16, zoom:5 }, // ✅
   { id:'lab-ingles',        label:'Laboratorio de Inglés',    category:'academic', icon:'🗣️', x:62.86, y:85.21, zoom:5 }, // ✅
   { id:'lab-ciencias',      label:'Laboratorio de Ciencias',  category:'academic', icon:'🔬', x:62.94, y:81.85, zoom:5 }, // ✅
-  { id:'multiuso',          label:'Multiuso',                 category:'academic', icon:'🏫', x:94.02, y:79.99, zoom:4 }, // ✅
+  { id:'gimnasio',          label:'Gimnasio',                 category:'academic', icon:'🏀', x:94.02, y:79.99, zoom:4 }, // ✅
   { id:'auditorio',         label:'Auditorio',                category:'academic', icon:'🎭', x:56.86, y:63.38,  zoom:5 }, // ⏳
   { id:'centro-innovacion', label:'Centro de Innovación',     category:'academic', icon:'💡', x:49.89,  y:70.84,  zoom:5 }, // ⏳
   { id:'taller-electricidad',             label:'Taller Electricidad',               category:'workshop', icon:'⚡', x:39.81, y:46.84, zoom:4 }, // ⏳
@@ -41,10 +41,8 @@ const MAP_LOCATIONS = [
  
 
   // ── ALIMENTACIÓN ───────────────────────────────────────────────────
-  { id:'comedor-externo',   label:'Comedor Externo',          category:'food',     icon:'🪑', x:32.0,  y:39.0,  zoom:4 }, // ⏳
-  { id:'comedor-interno',   label:'Comedor Interno',          category:'food',     icon:'🍽️', x:34.5,  y:39.0,  zoom:4 }, // ⏳
-  { id:'cocina',            label:'Cocina',                   category:'food',     icon:'👨‍🍳', x:32.0,  y:43.0,  zoom:5 }, // ⏳
-  { id:'casino',            label:'Casino',                   category:'food',     icon:'🍲', x:33.5,  y:47.0,  zoom:5 }, // ⏳
+  { id:'comedor-externo',   label:'Comedor Externo',          category:'food',     icon:'🪑', x:48.86, y:44.07, zoom:4 }, // ✅
+  { id:'comedor-interno',   label:'Comedor Interno',          category:'food',     icon:'🍽️', x:55.22, y:55.32, zoom:4 }, // ✅
 
   // ── SERVICIOS ──────────────────────────────────────────────────────
   { id:'banos-1',           label:'Baños',                    category:'services', icon:'🚻', x:37.63, y:68.70, zoom:5 }, // ⏳
@@ -66,7 +64,6 @@ const MAP_LOCATIONS = [
   { id:'grifos-1',          label:'Grifos Contra Incendio',   category:'emergency',icon:'🚒', x:14.36, y:44.16, zoom:4 }, // ✅
   { id:'grifos-2',          label:'Grifos Contra Incendio',   category:'emergency',icon:'🚒', x:82.23, y:87.65, zoom:4 }, // ✅
   { id:'grifos-3',          label:'Grifos Contra Incendio',   category:'emergency',icon:'🚒', x:57.66, y:43.91, zoom:4 }, // ✅
-  { id:'salida-emergencia', label:'Salida de Emergencia',     category:'emergency',icon:'🚪', x:29.0,  y:78.0,  zoom:3 }, // ⏳
 ];
 
 const MAP_CATEGORIES = {
@@ -92,6 +89,5 @@ const MAP_EMERGENCY_IDS = [
   'red-humeda-7',
   'grifos-1',
   'grifos-2',
-  'grifos-3',
-  'salida-emergencia'
+  'grifos-3'
 ];
