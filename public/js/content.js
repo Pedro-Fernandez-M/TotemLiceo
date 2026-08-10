@@ -64,6 +64,17 @@ const SCHOOL = {
     },
   ],
 
+  // Centro de Innovación – espacio destacado dentro de "Talleres"
+  // (texto base según la historia oficial; ajústalo con la información real)
+  centroInnovacion: {
+    logo: 'assets/logo-innovacion.png',
+    name: 'Centro de Innovación',
+    desc: 'Espacio equipado con laboratorios de robótica, electromovilidad, domótica, ' +
+          'automatización y programación, donde nuestros estudiantes desarrollan proyectos ' +
+          'de industria 4.0 y entrenan para competencias nacionales e internacionales como WorldSkills.',
+    badge: 'Industria 4.0 · Tecnología',
+  },
+
   // Logros WorldSkills y reconocimientos (fuente: historia oficial del liceo)
   logros: {
     intro:

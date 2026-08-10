@@ -326,11 +326,17 @@ class FennerAssistant {
             `y estoy aquí para ayudarte. ¿Qué necesitas saber?`,
       },
       {
-        kw: ['especialidad','especialidades','carrera','carreras','que estudian','se estudia','ofrecen'],
+        kw: ['taller','talleres','especialidad','especialidades','carrera','carreras','que estudian','se estudia','ofrecen'],
         r:  `Contamos con cinco especialidades técnico-profesionales: Electricidad, Edificación, ` +
             `Mecánica Automotriz, Construcciones Metálicas e Instalaciones Sanitarias. ` +
             `Todas otorgan el título de Técnico de Nivel Medio. ` +
-            `Para conocer más detalles, toca "Especialidades" en el menú principal.`,
+            `Para conocer más detalles, toca "Talleres" en el menú principal.`,
+      },
+      {
+        kw: ['centro de innovaci','innovacion','innovación','industria 4','robotica','robótica','domotica','domótica','electromovilidad','automatizacion','automatización'],
+        r:  SCHOOL.centroInnovacion
+              ? `${SCHOOL.centroInnovacion.desc} Puedes conocerlo tocando "Talleres" en el menú principal.`
+              : `El Centro de Innovación es un espacio de tecnología e industria 4.0. Toca "Talleres" en el menú para conocerlo.`,
       },
       {
         kw: ['electricidad','eléctric','electrica'],

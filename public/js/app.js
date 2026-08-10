@@ -216,7 +216,7 @@ async function openSection(section) {
     historia:       'Nuestra Historia',
     mapa:           'Mapa del Establecimiento',
     logros:         'Logros WorldSkills',
-    especialidades: 'Especialidades',
+    especialidades: 'Talleres',
   };
   document.getElementById('content-title').textContent = titles[section] || section;
 
@@ -478,7 +478,19 @@ function renderEspecialidades() {
        <span class="esp-badge">${e.nivel}</span>
      </div>`
   ).join('');
-  return `<div class="esp-grid">${cards}</div>`;
+
+  const ci = SCHOOL.centroInnovacion;
+  const ciCard = ci ? `
+    <div class="ci-card">
+      <div class="ci-logo-wrap"><img class="ci-logo" src="${ci.logo}" alt="${ci.name}" /></div>
+      <div class="ci-info">
+        <div class="ci-name">${ci.name}</div>
+        <div class="ci-desc">${ci.desc}</div>
+        <span class="ci-badge">${ci.badge}</span>
+      </div>
+    </div>` : '';
+
+  return `${ciCard}<div class="esp-grid">${cards}</div>`;
 }
 
 function renderMapa() {

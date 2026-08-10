@@ -482,6 +482,31 @@ html, body {
   padding: 4px 12px; border-radius: 12px; font-size: .85rem; font-weight: 600;
 }
 
+/* Centro de Innovación – tarjeta destacada dentro de Talleres */
+.ci-card {
+  display: flex; align-items: center; gap: 22px;
+  background: linear-gradient(135deg, #14243d, #1a2f4d);
+  border: 1px solid rgba(33,136,255,.3);
+  border-radius: var(--rxl); padding: 22px 26px; margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.ci-logo-wrap {
+  flex-shrink: 0; width: 190px; display: flex; align-items: center; justify-content: center;
+}
+.ci-logo { width: 100%; height: auto; }
+.ci-info { flex: 1; min-width: 0; }
+.ci-name { font-size: 1.5rem; font-weight: 800; color: #fff; }
+.ci-desc { font-size: 1.05rem; color: var(--txt); line-height: 1.55; margin-top: 8px; }
+.ci-badge {
+  display: inline-block; margin-top: 12px;
+  background: rgba(33,136,255,.2); color: #6fb4ff;
+  padding: 5px 14px; border-radius: 14px; font-size: .9rem; font-weight: 700;
+}
+@media (max-width: 900px) {
+  .ci-card { flex-direction: column; text-align: center; }
+  .ci-logo-wrap { width: 150px; }
+}
+
 /* ─── RIGHT PANEL ───────────────────────────────────────────────── */
 .right-panel {
   width: 370px; min-width: 350px;
