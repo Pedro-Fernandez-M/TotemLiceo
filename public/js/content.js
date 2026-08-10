@@ -99,9 +99,21 @@ const SCHOOL = {
     // Categorías de logros más allá de WorldSkills
     categorias: [
       {
+        icon: '🌐', titulo: 'Trayectoria WorldSkills',
+        items: [
+          '2012: 4° lugar en Electricidad en WorldSkills Américas (Sao Paulo, Brasil), detrás de EE.UU., Canadá y Brasil.',
+          '2014: reconocimiento al Mejor Técnico de la Delegación Chilena en WorldSkills Américas (Bogotá, Colombia).',
+          '2015: participación en el Mundial WorldSkills (Brasil), compitiendo en Electricidad junto a 60 países.',
+          '2016–2018: pódium sistemático a nivel nacional en Electricidad, Construcciones Metálicas e Instalaciones Sanitarias.',
+          '2018: Primer Lugar Nacional en Robótica en su primera participación.',
+          '2 docentes han representado a Chile como Expertos WorldSkills en Soldadura y Tecnología Mecánica (EE.UU. y Francia).',
+        ],
+      },
+      {
         icon: '🎓', titulo: 'Excelencia Académica',
         items: [
           'Dos décadas de Excelencia Académica reconocidas por sus resultados en el SIMCE; distinguido como «Liceo Exitoso» por el MINEDUC.',
+          'Acreditación de las especialidades técnicas por Chile Califica (2005–2010): Construcciones Metálicas, Mecánica Automotriz, Electricidad e Instalaciones Sanitarias.',
           'Liceo Bicentenario de Excelencia desde 2019, con el puntaje más alto a nivel nacional en su postulación.',
           'Reconocimiento SUPÉRATE 2016 (INACAP y Revista Qué Pasa) por el progreso escolar en la Región de Los Ríos.',
           'Nivel de Desempeño Alto de la Agencia de Calidad en 2016, 2017 y 2018.',
@@ -127,6 +139,7 @@ const SCHOOL = {
         icon: '🌱', titulo: 'Medio Ambiente',
         items: [
           'Certificación Ambiental de Excelencia desde 2012 (SEREMI y Ministerio de Medio Ambiente).',
+          'Reconocimiento por el mejoramiento en la gestión de residuos peligrosos (Ministerio de Medio Ambiente, en cooperación con el Gobierno Alemán).',
           'Premio Regional a la Gestión Medioambiental 2013, categoría Establecimientos Educacionales.',
           'Premios Latinoamérica Verde 2016: 1° nacional y 6° latinoamericano en categoría Energía, con el proyecto Sistema Solar para Agua Caliente Sanitaria.',
         ],
@@ -136,6 +149,23 @@ const SCHOOL = {
         items: [
           '25 docentes en pasantías en EE.UU., Brasil, Colombia, Inglaterra, Suiza, Alemania, España, Francia, Corea y País Vasco.',
           '19 estudiantes han representado al liceo en el extranjero: WorldSkills Américas, APEC Youth Skills Camp (China) y pasantías SENA Colombia, entre otras.',
+        ],
+      },
+      {
+        icon: '🤝', titulo: 'Vinculación con la Comunidad',
+        items: [
+          'Reconocimiento de SECREDUC y DEPROVEDUC del Ranco por el aporte a la calidad y equidad en la educación (2012).',
+          'Participación y compromiso en la realización de la Expo TP (2015).',
+          'Reconocimiento por la destacada contribución a la Educación Técnico Profesional en la Provincia del Ranco (2016).',
+          'Programa Academia ACCESS de inglés para estudiantes, en convenio entre SNA Educa y la Embajada de Estados Unidos (2015–2016).',
+        ],
+      },
+      {
+        icon: '📚', titulo: 'Investigación y Publicaciones',
+        items: [
+          'Libro «Claves en Educación Técnico Profesional: 10 Modelos a replicar», publicado por Fundación Libertad y Desarrollo (2013).',
+          'Participación en el estudio del CIAE «Comprendiendo el Mejoramiento Sostenido en Educación Secundaria» (2017).',
+          'Levantamiento de Práctica Pedagógica Exitosa por la Agencia de Calidad sobre Desarrollo de Habilidades Comunicacionales (2018).',
         ],
       },
       {
