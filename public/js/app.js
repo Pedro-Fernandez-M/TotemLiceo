@@ -215,7 +215,7 @@ async function openSection(section) {
   const titles = {
     historia:       'Nuestra Historia',
     mapa:           'Mapa del Establecimiento',
-    logros:         'Logros WorldSkills',
+    logros:         'Logros del Liceo',
     especialidades: 'Talleres',
   };
   document.getElementById('content-title').textContent = titles[section] || section;
@@ -623,16 +623,20 @@ function renderLogros() {
      </div>`
   ).join('');
 
-  const otros = lg.otros.map(o =>
-    `<div class="lg-otro">
-       <span class="lg-otro-year">${o.year}</span>
-       <span class="lg-otro-text">${o.text}</span>
+  const categorias = (lg.categorias || []).map(c =>
+    `<div class="lg-cat">
+       <div class="lg-cat-hdr"><span class="lg-cat-ico">${c.icon}</span>${c.titulo}</div>
+       <ul class="lg-cat-list">
+         ${c.items.map(it => `<li>${it}</li>`).join('')}
+       </ul>
      </div>`
   ).join('');
 
   return `
     <div class="lg-wrap">
       <p class="lg-intro">${lg.intro}</p>
+
+      <h3 class="lg-subtitle">🏆 Medallero WorldSkills</h3>
       <div class="lg-totals">
         <div class="lg-total"><span class="lg-total-medal">🥇</span><span class="lg-total-n">${totals.oro}</span><span class="lg-total-lbl">Oro</span></div>
         <div class="lg-total"><span class="lg-total-medal">🥈</span><span class="lg-total-n">${totals.plata}</span><span class="lg-total-lbl">Plata</span></div>
@@ -640,8 +644,9 @@ function renderLogros() {
       </div>
       <div class="lg-destacado">${lg.destacado}</div>
       <div class="lg-grid">${cards}</div>
-      <h3 class="lg-subtitle">Otros reconocimientos</h3>
-      <div class="lg-otros">${otros}</div>
+
+      <h3 class="lg-subtitle">Trayectoria y reconocimientos</h3>
+      <div class="lg-cats">${categorias}</div>
     </div>`;
 }
 

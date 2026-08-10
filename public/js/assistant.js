@@ -249,16 +249,16 @@ class FennerAssistant {
     if (histKw.some(k => t.includes(k))) return this._historiaResponse();
 
     // Logros / WorldSkills: responde y abre la sección en pantalla
-    const lgKw = ['worldskills','world skills','medalla','logro','premio','reconocimiento','campeon','campeón'];
+    const lgKw = ['worldskills','world skills','medalla','logro','premio','reconocimiento','campeon','campeón','trayectoria'];
     if (lgKw.some(k => t.includes(k))) {
       if (typeof openSection === 'function') openSection('logros');
       const tot = SCHOOL.logros.medallero.reduce(
         (a, m) => ({ oro: a.oro + m.oro, plata: a.plata + m.plata, bronce: a.bronce + m.bronce }),
         { oro: 0, plata: 0, bronce: 0 });
-      return `Desde 2012 nuestro liceo ha obtenido ${tot.oro} medallas de oro, ` +
-             `${tot.plata} de plata y ${tot.bronce} de bronce en competencias WorldSkills, ` +
-             `destacando en robótica móvil y electricidad KNX. ` +
-             `Te estoy mostrando el medallero completo en pantalla.`;
+      return `En más de 30 años, nuestro liceo ha destacado en excelencia académica, innovación, ` +
+             `medio ambiente y deporte. En WorldSkills suma ${tot.oro} medallas de oro, ` +
+             `${tot.plata} de plata y ${tot.bronce} de bronce. ` +
+             `Te estoy mostrando todos los logros en pantalla.`;
     }
 
     // Matrícula / admisión tiene prioridad (la palabra "cuándo" también

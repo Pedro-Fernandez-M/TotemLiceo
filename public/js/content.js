@@ -75,11 +75,14 @@ const SCHOOL = {
     badge: 'Industria 4.0 · Tecnología',
   },
 
-  // Logros WorldSkills y reconocimientos (fuente: historia oficial del liceo)
+  // Logros del liceo (fuente: documento "Logros y trayectoria hasta 2026")
   logros: {
     intro:
-      'Desde 2012, la participación en WorldSkills ha sido uno de los sellos más ' +
-      'distintivos de nuestro liceo, con destacados resultados a nivel nacional e internacional.',
+      'En más de 30 años de historia, nuestra Unidad Educativa se ha transformado en un ' +
+      'referente de la formación técnica del sur de Chile, con hitos en la excelencia académica, ' +
+      'la innovación, las competencias técnicas y el compromiso con la comunidad.',
+
+    // Medallero WorldSkills Chile (desde 2016)
     medallero: [
       { skill:'Robótica Móvil',      icon:'🤖', oro:7, plata:1, bronce:1, extra:'2 veces «Mejor de los Mejores»' },
       { skill:'Electricidad KNX',    icon:'⚡', oro:5, plata:1, bronce:0, extra:'2 veces «Mejor de los Mejores»' },
@@ -89,14 +92,58 @@ const SCHOOL = {
       { skill:'Tecnología Mecánica', icon:'⚙️', oro:0, plata:0, bronce:1, extra:'1 medalla de excelencia' },
     ],
     destacado:
-      '🏆 WorldSkills Américas 2025 (Chile): medalla de plata en Electricidad KNX ' +
-      'y medalla de bronce en Robótica.',
-    otros: [
-      { year: 2012, text: 'Certificación ambiental de excelencia, vigente hasta hoy.' },
-      { year: 2013, text: 'Premio Regional de Medio Ambiente.' },
-      { year: 2016, text: 'Primer lugar nacional y sexto latinoamericano en los Premios Latinoamérica Verde, categoría energía, con un sistema solar para agua caliente sanitaria.' },
-      { year: 2018, text: 'Primer lugar en las Olimpiadas Nacionales de Mecatrónica FESTO, con acceso a formación internacional en industria 4.0.' },
-      { year: 2019, text: 'Integración a la red de Liceos Bicentenario de Excelencia con el puntaje más alto a nivel nacional.' },
+      '🏆 WorldSkills Américas 2025 (Chile): medalla de plata en Electricidad KNX y ' +
+      'medalla de bronce en Robótica Móvil. Ambos equipos aseguraron cupo directo al ' +
+      'Mundial WorldSkills 2026 en Shanghái, China.',
+
+    // Categorías de logros más allá de WorldSkills
+    categorias: [
+      {
+        icon: '🎓', titulo: 'Excelencia Académica',
+        items: [
+          'Dos décadas de Excelencia Académica reconocidas por sus resultados en el SIMCE; distinguido como «Liceo Exitoso» por el MINEDUC.',
+          'Liceo Bicentenario de Excelencia desde 2019, con el puntaje más alto a nivel nacional en su postulación.',
+          'Reconocimiento SUPÉRATE 2016 (INACAP y Revista Qué Pasa) por el progreso escolar en la Región de Los Ríos.',
+          'Nivel de Desempeño Alto de la Agencia de Calidad en 2016, 2017 y 2018.',
+        ],
+      },
+      {
+        icon: '🏅', titulo: 'Competencias SNA Educa',
+        items: [
+          'Robótica: 1° Lugar Nacional en 2024.',
+          'Debate: 16 versiones — 2 primeros, 7 segundos y 3 terceros lugares.',
+          'Folclore: 14 versiones — 7 primeros, 2 segundos y 1 tercer lugar.',
+          'Olimpiada de Matemática: 10 versiones — 4 primeros, 3 segundos y 1 tercer lugar.',
+        ],
+      },
+      {
+        icon: '💡', titulo: 'Innovación y Tecnología',
+        items: [
+          '1° Lugar en las Olimpiadas Nacionales de Mecatrónica FESTO (2018), con capacitación en industria 4.0 en FESTO Sao Paulo, Brasil (2019).',
+          'Sello Bicentenario enfocado en innovación y tecnología: automatización, programación y electromovilidad.',
+        ],
+      },
+      {
+        icon: '🌱', titulo: 'Medio Ambiente',
+        items: [
+          'Certificación Ambiental de Excelencia desde 2012 (SEREMI y Ministerio de Medio Ambiente).',
+          'Premio Regional a la Gestión Medioambiental 2013, categoría Establecimientos Educacionales.',
+          'Premios Latinoamérica Verde 2016: 1° nacional y 6° latinoamericano en categoría Energía, con el proyecto Sistema Solar para Agua Caliente Sanitaria.',
+        ],
+      },
+      {
+        icon: '🌎', titulo: 'Internacionalización',
+        items: [
+          '25 docentes en pasantías en EE.UU., Brasil, Colombia, Inglaterra, Suiza, Alemania, España, Francia, Corea y País Vasco.',
+          '19 estudiantes han representado al liceo en el extranjero: WorldSkills Américas, APEC Youth Skills Camp (China) y pasantías SENA Colombia, entre otras.',
+        ],
+      },
+      {
+        icon: '⚽', titulo: 'Deporte',
+        items: [
+          'Selecciones de básquetbol, fútbol, futsal, vóleibol, handball, tenis de mesa y atletismo, con presencia constante en el pódium de los Juegos Escolares del IND.',
+        ],
+      },
     ],
   },
 

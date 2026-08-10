@@ -815,18 +815,28 @@ html, body {
 }
 .lg-card-extra { margin-top: 9px; font-size: .92rem; color: var(--yellow); }
 
-.lg-subtitle { font-size: 1.18rem; font-weight: 700; margin-top: 4px; }
-.lg-otros    { display: flex; flex-direction: column; gap: 8px; }
-.lg-otro {
-  display: flex; align-items: baseline; gap: 12px;
+.lg-subtitle { font-size: 1.18rem; font-weight: 700; margin-top: 10px; }
+
+/* Categorías de logros (académica, competencias, medio ambiente, etc.) */
+.lg-cats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.lg-cat {
   background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 11px 14px;
+  border-radius: var(--rl); padding: 16px 18px;
 }
-.lg-otro-year {
-  font-weight: 800; color: var(--yellow);
-  font-size: 1.02rem; flex-shrink: 0;
+.lg-cat-hdr {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 10px;
 }
-.lg-otro-text { font-size: 1rem; color: var(--txt); line-height: 1.5; }
+.lg-cat-ico { font-size: 1.4rem; }
+.lg-cat-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.lg-cat-list li {
+  position: relative; padding-left: 18px;
+  font-size: .98rem; color: var(--txt); line-height: 1.5;
+}
+.lg-cat-list li::before {
+  content: '▸'; position: absolute; left: 0; top: 0; color: var(--yellow);
+}
+@media (max-width: 900px) { .lg-cats { grid-template-columns: 1fr; } }
 
 /* ─── VISOR DE FOTO COMPLETA (LIGHTBOX) ──────────────────────────── */
 .lightbox {
