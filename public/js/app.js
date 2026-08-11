@@ -526,6 +526,7 @@ function renderTallerDetalle(i) {
       <p class="taller-info">${e.info || e.desc}</p>
       ${e.competencia ? `<div class="taller-comp">🏆 ${e.competencia}</div>` : ''}
       ${thumbs ? `<h4 class="taller-fotos-title">Galería del taller</h4>
+      <p class="esp-gallery-hint">👉 Desliza con el dedo para ver más · toca una foto para ampliarla</p>
       <div class="esp-gallery esp-gallery-grid">${thumbs}</div>` : ''}
     </div>`;
 }

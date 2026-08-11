@@ -51,7 +51,7 @@ const SCHOOL = {
              'Américas y cupo directo al Mundial WorldSkills 2026 en Shanghái.',
       fotos: [
         'assets/talleres/electricidad-1.jpg', 'assets/talleres/electricidad-2.jpg',
-        'assets/talleres/electricidad-3.jpg', 'assets/talleres/electricidad-4.jpg',
+        'assets/talleres/electricidad-3.jpg',
         'assets/talleres/electricidad-5.jpg', 'assets/talleres/electricidad-6.jpg',
       ],
     },
