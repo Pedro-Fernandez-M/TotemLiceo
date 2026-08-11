@@ -53,8 +53,15 @@ class FennerAssistant {
 
     this.recognition.onerror = (e) => {
       this._setIdle();
-      if (e.error === 'no-speech')   this._respond('No logré escucharte. ¿Podrías intentarlo de nuevo, por favor?');
-      if (e.error === 'not-allowed') this._respond('Para poder escucharte necesito acceso al micrófono. Por favor, concede el permiso cuando el navegador lo solicite.');
+      const mensajes = {
+        'no-speech':           'No logré escucharte. Acércate al micrófono e inténtalo de nuevo.',
+        'not-allowed':         'No tengo permiso para usar el micrófono. Toca el ícono de la barra de direcciones del navegador y permite el micrófono para este sitio.',
+        'service-not-allowed': 'No tengo permiso para usar el micrófono en este equipo.',
+        'audio-capture':       'No detecto un micrófono conectado. Verifica que el equipo tenga un micrófono.',
+        'network':             'El reconocimiento de voz necesita conexión a internet para funcionar.',
+      };
+      const m = mensajes[e.error];
+      if (m) this._respond(m);
     };
 
     this.recognition.onend = () => this._setIdle();
@@ -87,9 +94,26 @@ class FennerAssistant {
     }
   }
 
-  _startListening() {
+  async _startListening() {
     if (!this.recognition) return;
     if (this.synth.speaking) this.synth.cancel();
+
+    // Asegurar acceso al micrófono: dispara el permiso y da un error claro si falla
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(t => t.stop()); // solo queríamos confirmar el permiso
+      } catch (err) {
+        this._setIdle();
+        if (err.name === 'NotAllowedError' || err.name === 'SecurityError')
+          this._respond('No tengo permiso para usar el micrófono. Toca el ícono de la barra de direcciones del navegador y permite el micrófono para este sitio.');
+        else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError')
+          this._respond('No detecto un micrófono conectado. Verifica que el equipo tenga un micrófono.');
+        else
+          this._respond('No pude activar el micrófono. Inténtalo nuevamente.');
+        return;
+      }
+    }
 
     this.isListening = true;
     document.getElementById('speak-btn').classList.add('is-listening');
