@@ -194,7 +194,7 @@ class FennerAssistant {
   // ── UBICACIÓN EN EL MAPA ──────────────────────────────────────
   _matchLocation(t) {
     const norm = t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-    const locWords = ['donde','ubic','como llego','esta la','esta el','encuentro','hallo','busco','necesito llegar'];
+    const locWords = ['donde','ubic','como llego',' esta la',' esta el','encuentro','hallo','busco','necesito llegar'];
     if (!locWords.some(w => norm.includes(w))) return null;
 
     // Pregunta por el liceo mismo → entregar la dirección, no el plano interno
@@ -253,8 +253,62 @@ class FennerAssistant {
     }, 480);
   }
 
+  // ── CALCULADORA (offline) ─────────────────────────────────────
+  _palabrasANumeros(s) {
+    const map = {
+      cero:0, un:1, uno:1, una:1, dos:2, tres:3, cuatro:4, cinco:5, seis:6,
+      siete:7, ocho:8, nueve:9, diez:10, once:11, doce:12, trece:13, catorce:14,
+      quince:15, dieciseis:16, diecisiete:17, dieciocho:18, diecinueve:19,
+      veinte:20, veintiuno:21, veintidos:22, veintitres:23, veinticuatro:24,
+      veinticinco:25, treinta:30, cuarenta:40, cincuenta:50, sesenta:60,
+      setenta:70, ochenta:80, noventa:90, cien:100, ciento:100, mil:1000,
+    };
+    return s.replace(/\b[a-z]+\b/g, w => (w in map ? map[w] : w));
+  }
+
+  _calcular(n) {
+    let s = n
+      .replace(/\bmas\b|\bsumado a\b|\bsumado\b/g, '+')
+      .replace(/\bmenos\b|\brestado\b/g, '-')
+      .replace(/\bpor\b|\bmultiplicado por\b|\bmultiplicado\b/g, '*')
+      .replace(/\bdividido por\b|\bdividido en\b|\bdividido\b|\bentre\b/g, '/');
+    s = this._palabrasANumeros(s);
+    const m = s.match(/(-?\d+(?:[.,]\d+)?)\s*([+\-*/])\s*(-?\d+(?:[.,]\d+)?)/);
+    if (!m) return null;
+    const a  = parseFloat(m[1].replace(',', '.'));
+    const op = m[2];
+    const b  = parseFloat(m[3].replace(',', '.'));
+    let r;
+    if      (op === '+') r = a + b;
+    else if (op === '-') r = a - b;
+    else if (op === '*') r = a * b;
+    else { if (b === 0) return 'No se puede dividir por cero.'; r = a / b; }
+    r = Math.round(r * 1000) / 1000;
+    return `El resultado es ${r}.`;
+  }
+
   // ── BASE DE CONOCIMIENTO ───────────────────────────────────────
   _match(t) {
+    const n = t.normalize('NFD').replace(/[̀-ͯ]/g, ''); // sin acentos
+
+    // Fecha / día de hoy (funciona sin internet)
+    if (['que dia es','que dia estamos','que fecha','fecha de hoy','dia de hoy','dia es hoy','a cuanto estamos'].some(k => n.includes(k))) {
+      const hoy = new Date().toLocaleDateString('es-CL', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+      return `Hoy es ${hoy}.`;
+    }
+
+    // Hora actual (funciona sin internet)
+    if (n.includes('que hora') || n.includes('hora es') || n.includes('hora actual')) {
+      const hora = new Date().toLocaleTimeString('es-CL', { hour:'2-digit', minute:'2-digit', hour12:false });
+      return `Son las ${hora} horas.`;
+    }
+
+    // Cálculos matemáticos (funciona sin internet)
+    if (['cuanto es','cuanto son','calcula','cuanto da','resultado de'].some(k => n.includes(k))) {
+      const r = this._calcular(n);
+      if (r) return r;
+    }
+
     // El tótem no entrega información del clima
     const climaKw = ['clima','temperatura','lluvia','llover','calor','frío','frio'];
     if (climaKw.some(k => t.includes(k))) {
