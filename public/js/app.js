@@ -477,22 +477,18 @@ function openTallerLightbox(espIndex, fotoIndex) {
 }
 window.openTallerLightbox = openTallerLightbox;
 
-// ── ESPECIALIDADES ─────────────────────────────────────────────────
+// ── TALLERES (ESPECIALIDADES) ──────────────────────────────────────
+// Vista lista: tarjetas con descripción breve; al tocar se abre el detalle.
 function renderEspecialidades() {
-  const cards = SCHOOL.especialidades.map((e, ei) => {
-    const fotos = e.fotos || [];
-    const thumbs = fotos.map((f, fi) =>
-      `<img class="esp-thumb" src="${f}" alt="${e.name}" loading="lazy"
-            onclick="openTallerLightbox(${ei}, ${fi})" />`
-    ).join('');
-    return `<div class="esp-card">
+  const cards = SCHOOL.especialidades.map((e, ei) =>
+    `<div class="esp-card" onclick="openTaller(${ei})">
        <div class="esp-icon">${e.icon}</div>
        <div class="esp-name">${e.name}</div>
        <div class="esp-desc">${e.desc}</div>
        <span class="esp-badge">${e.nivel}</span>
-       ${thumbs ? `<div class="esp-gallery">${thumbs}</div>` : ''}
-     </div>`;
-  }).join('');
+       <span class="esp-more">Ver taller →</span>
+     </div>`
+  ).join('');
 
   const ci = SCHOOL.centroInnovacion;
   const ciCard = ci ? `
@@ -507,6 +503,46 @@ function renderEspecialidades() {
 
   return `${ciCard}<div class="esp-grid">${cards}</div>`;
 }
+
+// Vista detalle de un taller: info ampliada, competencia y galería de fotos.
+function renderTallerDetalle(i) {
+  const e = SCHOOL.especialidades[i];
+  if (!e) return '';
+  const thumbs = (e.fotos || []).map((f, fi) =>
+    `<img class="esp-thumb" src="${f}" alt="${e.name}" loading="lazy"
+          onclick="openTallerLightbox(${i}, ${fi})" />`
+  ).join('');
+
+  return `
+    <div class="taller-detalle">
+      <button class="back-btn back-inline" onclick="backToTalleres()">← Volver a Talleres</button>
+      <div class="taller-hero">
+        <span class="taller-hero-icon">${e.icon}</span>
+        <div>
+          <h3 class="taller-hero-name">${e.name}</h3>
+          <span class="esp-badge">${e.nivel}</span>
+        </div>
+      </div>
+      <p class="taller-info">${e.info || e.desc}</p>
+      ${e.competencia ? `<div class="taller-comp">🏆 ${e.competencia}</div>` : ''}
+      ${thumbs ? `<h4 class="taller-fotos-title">Galería del taller</h4>
+      <div class="esp-gallery esp-gallery-grid">${thumbs}</div>` : ''}
+    </div>`;
+}
+
+function openTaller(i) {
+  const body = document.getElementById('content-body');
+  body.innerHTML = renderTallerDetalle(i);
+  body.scrollTop = 0;
+}
+window.openTaller = openTaller;
+
+function backToTalleres() {
+  const body = document.getElementById('content-body');
+  body.innerHTML = renderEspecialidades();
+  body.scrollTop = 0;
+}
+window.backToTalleres = backToTalleres;
 
 function renderMapa() {
   const catOrder = ['admin','academic','food','workshop','services','emergency'];
