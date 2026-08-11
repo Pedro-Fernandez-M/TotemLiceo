@@ -41,7 +41,11 @@ const SCHOOL = {
              'mantener sistemas eléctricos residenciales, comerciales e industriales, dominando ' +
              'las normas de seguridad, la automatización y la tecnología KNX de instalaciones ' +
              'inteligentes. Es una de las dos especialidades con que nació el liceo en 1996 y la ' +
-             'más laureada de la institución.',
+             'más laureada de la institución. ' +
+             'Durante su formación trabajan con tableros eléctricos, canalizaciones, motores y ' +
+             'sistemas de control, además de proyectos de electromovilidad y energías renovables. ' +
+             'El egresado puede desempeñarse en empresas eléctricas, construcción, industria y ' +
+             'mantención, o continuar estudios técnicos y profesionales del área.',
       competencia: 'En WorldSkills, la habilidad de Electricidad KNX suma 5 medallas de oro, 1 de plata ' +
              'y 2 reconocimientos «Mejor de los Mejores». En 2025 obtuvo medalla de plata en WorldSkills ' +
              'Américas y cupo directo al Mundial WorldSkills 2026 en Shanghái.',
@@ -59,7 +63,11 @@ const SCHOOL = {
       info:  'El Taller de Edificación forma técnicos en construcción, lectura de planos, tabiquería, ' +
              'materialidad y técnicas constructivas modernas, con práctica real en el armado de ' +
              'estructuras y terminaciones. Es uno de los sectores con mayor dinamismo y demanda ' +
-             'laboral del país.',
+             'laboral del país. ' +
+             'Los estudiantes aprenden a construir muros y estructuras en madera, realizar trazados, ' +
+             'instalar revestimientos y ejecutar terminaciones como cerámicas y tabiques, aplicando ' +
+             'siempre las medidas de seguridad y prevención de riesgos. El egresado puede trabajar ' +
+             'en obras de construcción, empresas constructoras y proyectos de vivienda.',
       competencia: 'En WorldSkills, la habilidad de Edificación ha obtenido 1 medalla de oro a nivel nacional.',
       fotos: [
         'assets/talleres/edificacion-1.jpg', 'assets/talleres/edificacion-2.jpg',
@@ -75,7 +83,11 @@ const SCHOOL = {
       nivel: 'Técnico de Nivel Medio',
       info:  'El Taller de Mecánica Automotriz entrega formación integral en diagnóstico, mantención ' +
              'y reparación de vehículos, con trabajo directo sobre motores y sistemas del automóvil. ' +
-             'Es una de las especialidades con mayor inserción laboral de la región.',
+             'Es una de las especialidades con mayor inserción laboral de la región. ' +
+             'Los estudiantes trabajan en motores, sistemas de frenos, suspensión, transmisión y ' +
+             'sistemas eléctricos del vehículo, utilizando herramientas y equipos de diagnóstico ' +
+             'modernos. El egresado puede desempeñarse en talleres automotrices, concesionarias, ' +
+             'empresas de transporte y servicios de mantención.',
       competencia: 'En WorldSkills, la habilidad de Tecnología Mecánica ha obtenido 1 medalla de bronce y ' +
              '1 medalla de excelencia. El liceo participa en WorldSkills desde 2012.',
       fotos: [
@@ -90,7 +102,11 @@ const SCHOOL = {
       info:  'El Taller de Construcciones Metálicas desarrolla habilidades en soldadura industrial, ' +
              'fabricación y montaje de estructuras metálicas, con altos estándares de seguridad. ' +
              'Es una de las dos especialidades fundadoras del liceo en 1996 y una de las más ' +
-             'valoradas por la industria.',
+             'valoradas por la industria. ' +
+             'Los estudiantes aprenden distintos procesos de soldadura, corte, trazado y armado de ' +
+             'piezas y estructuras metálicas, interpretando planos y aplicando controles de calidad. ' +
+             'El egresado puede trabajar en maestranzas, construcción, montaje industrial y ' +
+             'fabricación metalmecánica.',
       competencia: 'En WorldSkills, la habilidad de Soldadura suma 1 medalla de oro, 2 de plata, ' +
              '1 de bronce y 1 de excelencia.',
       fotos: [
@@ -106,7 +122,11 @@ const SCHOOL = {
       nivel: 'Técnico de Nivel Medio',
       info:  'El Taller de Instalaciones Sanitarias capacita en el diseño, instalación y mantención ' +
              'de redes de agua potable, alcantarillado y sistemas de calefacción, esenciales para el ' +
-             'bienestar de las comunidades. Es una especialidad con alta demanda en todo Chile.',
+             'bienestar de las comunidades. Es una especialidad con alta demanda en todo Chile. ' +
+             'Los estudiantes aprenden a instalar tuberías y artefactos, ejecutar redes de agua y ' +
+             'desagüe, y montar sistemas de agua caliente sanitaria, interpretando planos y normativa ' +
+             'vigente. El egresado puede trabajar en construcción, empresas sanitarias, gasfitería ' +
+             'y proyectos de eficiencia energética.',
       competencia: 'En WorldSkills, la habilidad de Fontanería ha obtenido 3 medallas de plata.',
       fotos: [
         'assets/talleres/sanitarias-1.jpg', 'assets/talleres/sanitarias-2.jpg',

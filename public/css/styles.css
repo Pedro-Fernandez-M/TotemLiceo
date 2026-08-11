@@ -166,13 +166,26 @@ html, body {
 .nav-btn:active { transform: scale(.96); }
 .nav-btn:active::after { background: rgba(255,255,255,.1); }
 
-.btn-historia      { background: linear-gradient(140deg,#1565c0,#0288d1); }
-.btn-mapa          { background: linear-gradient(140deg,#2e7d32,#43a047); }
-.btn-logros        { background: linear-gradient(140deg,#9a6700,#c9940a); }
-.btn-especialidades{ background: linear-gradient(140deg,#4a148c,#7b1fa2); }
+/* Botones con foto del liceo de fondo, semitransparente bajo el color */
+.nav-btn { background-size: cover; background-position: center; }
+.btn-historia {
+  background-image: linear-gradient(140deg, rgba(21,101,192,.66), rgba(2,136,209,.7)), url(../assets/menu/historia-bg.jpg);
+}
+.btn-mapa {
+  background-image: linear-gradient(140deg, rgba(46,125,50,.66), rgba(67,160,71,.7)), url(../assets/menu/mapa-bg.jpg);
+}
+.btn-logros {
+  background-image: linear-gradient(140deg, rgba(154,103,0,.66), rgba(201,148,10,.7)), url(../assets/menu/logros-bg.jpg);
+}
+.btn-especialidades {
+  background-image: linear-gradient(140deg, rgba(74,20,140,.66), rgba(123,31,162,.7)), url(../assets/menu/talleres-bg.jpg);
+}
 
-.nb-icon  { font-size: 3.2rem; line-height: 1; }
-.nb-label { font-size: 1.35rem; font-weight: 600; text-align: center; padding: 0 14px; }
+.nb-icon  { font-size: 3.2rem; line-height: 1; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.nb-label {
+  font-size: 1.35rem; font-weight: 700; text-align: center; padding: 0 14px;
+  text-shadow: 0 2px 10px rgba(0,0,0,.6);
+}
 
 /* Content panel */
 .content-panel {
