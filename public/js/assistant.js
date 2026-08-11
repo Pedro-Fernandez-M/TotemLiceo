@@ -343,10 +343,11 @@ class FennerAssistant {
     // aparece en horarios, así evitamos que se confundan)
     const matriKw = ['matricula','matrícula','postula','admisi','inscri','vacante'];
     if (matriKw.some(k => t.includes(k))) {
+      if (typeof openSection === 'function') openSection('admision');
       return `El primer periodo de postulación es del 4 al 27 de agosto. ` +
              `Para postular, es necesario haber cursado 8° básico o 1° medio ` +
              `y presentar certificado de notas, cédula de identidad y fotografías. ` +
-             `Puedes acercarte a secretaría para recibir más información.`;
+             `Te muestro toda la información de admisión en pantalla.`;
     }
 
     for (const item of this.kb) {

@@ -11,6 +11,32 @@ const SCHOOL = {
   email:    'contacto@industrialfenner.cl',
   rector:   'Ernesto Uslar Goverts',
 
+  // Admisión / Postulación (editable)
+  admision: {
+    intro: 'Te invitamos a ser parte del Liceo Bicentenario Industrial Ingeniero Ricardo ' +
+           'Fenner Ruedi, un referente de la formación técnica del sur de Chile.',
+    periodos: [
+      { titulo: 'Primer periodo de postulación', fecha: 'Del 4 al 27 de agosto' },
+    ],
+    requisitos: [
+      'Haber cursado 8° básico o 1° medio.',
+      'Certificado de notas.',
+      'Cédula de identidad del estudiante.',
+      'Fotografías tamaño carnet.',
+    ],
+    especialidades: [
+      'Electricidad', 'Edificación', 'Mecánica Automotriz',
+      'Construcciones Metálicas', 'Instalaciones Sanitarias',
+    ],
+    beneficios: [
+      'Liceo Bicentenario de Excelencia, gratuito y subvencionado (SNA Educa).',
+      'Internado con capacidad para 443 estudiantes (damas y varones).',
+      'Centro de Innovación con laboratorios de robótica, automatización y electromovilidad.',
+      'Participación destacada en WorldSkills y competencias nacionales.',
+    ],
+    contacto: 'Acércate a Secretaría o escríbenos a contacto@industrialfenner.cl para más información.',
+  },
+
   historiaIntro:
     'Bienvenido al Liceo Bicentenario Industrial Ingeniero Ricardo Fenner Ruedi, ' +
     'un establecimiento de educación técnico-profesional de La Unión, Región de Los Ríos, ' +

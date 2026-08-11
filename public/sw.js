@@ -5,7 +5,7 @@
    Estrategia: cache-first con actualización en segundo plano (SWR).
    ────────────────────────────────────────────────────────────── */
 
-const CACHE = 'totem-v9';
+const CACHE = 'totem-v10';
 
 const CORE = [
   '/',
@@ -22,6 +22,7 @@ const CORE = [
   '/assets/menu/mapa-bg.jpg',
   '/assets/menu/logros-bg.jpg',
   '/assets/menu/talleres-bg.jpg',
+  '/assets/menu/admision-bg.jpg',
   '/assets/logo-liceo.png',
   '/assets/logo-sna.png',
   '/assets/logo-innovacion.png',

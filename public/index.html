@@ -13,6 +13,10 @@
 
   <!-- ── PANTALLA IDLE ─────────────────────────────────────────── -->
   <div id="idle-overlay">
+    <div class="idle-bg">
+      <img id="idle-bg-a" class="idle-bg-img show" alt="" />
+      <img id="idle-bg-b" class="idle-bg-img" alt="" />
+    </div>
     <div class="idle-content">
       <div class="idle-logo-wrap">
         <img class="idle-crest" src="assets/logo-liceo.png"
@@ -21,6 +25,7 @@
       <h1 class="idle-school-name">Liceo Bicentenario Industrial<br/>Ingeniero Ricardo Fenner Ruedi</h1>
       <div id="idle-time" class="idle-time">00:00</div>
       <div id="idle-date" class="idle-date">Cargando…</div>
+      <div id="idle-highlight" class="idle-highlight"></div>
       <div class="idle-touch-hint">
         <div class="idle-ripple"></div>
         <span>Toca la pantalla para comenzar</span>
@@ -79,6 +84,10 @@
           <button class="nav-btn btn-especialidades" data-section="especialidades">
             <span class="nb-icon">⚙️</span>
             <span class="nb-label">Talleres</span>
+          </button>
+          <button class="nav-btn btn-admision" data-section="admision">
+            <span class="nb-icon">🎓</span>
+            <span class="nb-label">Admisión y Postulación</span>
           </button>
         </div>
 

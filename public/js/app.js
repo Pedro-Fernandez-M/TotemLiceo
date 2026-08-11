@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightbox();
   initFaqChips();
   initKioskGuards();
+  startAttract(); // el tótem arranca en reposo
 });
 
 // ── BLINDAJE MODO KIOSKO ───────────────────────────────────────────
@@ -146,9 +147,57 @@ function hideIdleWarning() {
   document.getElementById('idle-warn').classList.remove('open');
 }
 
+// ── PANTALLA DE INICIO QUE ATRAE ───────────────────────────────────
+const ATTRACT = [
+  { img: 'assets/menu/mapa-bg.jpg',     text: 'Más de 30 años formando técnicos en La Unión' },
+  { img: 'assets/menu/talleres-bg.jpg', text: '5 especialidades técnicas + Centro de Innovación' },
+  { img: 'assets/menu/logros-bg.jpg',   text: '13 medallas de oro en WorldSkills · rumbo a Shanghái 2026' },
+  { img: 'assets/menu/admision-bg.jpg', text: 'Postulaciones abiertas del 4 al 27 de agosto' },
+];
+let attractTimer   = null;
+let attractIdx     = 0;
+let attractFrontIsA = true;
+
+function _attractShow(i) {
+  const a  = document.getElementById('idle-bg-a');
+  const b  = document.getElementById('idle-bg-b');
+  const hl = document.getElementById('idle-highlight');
+  if (!a || !b) return;
+  const item  = ATTRACT[i];
+  const back  = attractFrontIsA ? b : a;
+  const front = attractFrontIsA ? a : b;
+  back.src = item.img;
+  back.classList.add('show');
+  front.classList.remove('show');
+  attractFrontIsA = !attractFrontIsA;
+  if (hl) { hl.textContent = item.text; hl.classList.remove('anim'); void hl.offsetWidth; hl.classList.add('anim'); }
+}
+
+function startAttract() {
+  stopAttract();
+  const a  = document.getElementById('idle-bg-a');
+  const b  = document.getElementById('idle-bg-b');
+  const hl = document.getElementById('idle-highlight');
+  if (!a) return;
+  attractIdx = 0;
+  attractFrontIsA = true;
+  a.src = ATTRACT[0].img; a.classList.add('show');
+  b.classList.remove('show');
+  if (hl) hl.textContent = ATTRACT[0].text;
+  attractTimer = setInterval(() => {
+    attractIdx = (attractIdx + 1) % ATTRACT.length;
+    _attractShow(attractIdx);
+  }, 5000);
+}
+
+function stopAttract() {
+  if (attractTimer) { clearInterval(attractTimer); attractTimer = null; }
+}
+
 function wakeUp() {
   if (!sleeping) return;
   sleeping = false;
+  stopAttract();
   tryFullscreen(); // el toque que despierta es un gesto válido para pantalla completa
   const overlay = document.getElementById('idle-overlay');
   const app     = document.getElementById('app');
@@ -168,6 +217,7 @@ function goToSleep() {
   overlay.style.display = 'flex';
   requestAnimationFrame(() => overlay.classList.remove('hidden'));
   app.classList.add('app-hidden');
+  startAttract();
 }
 
 function resetIdleTimer() {
@@ -217,6 +267,7 @@ async function openSection(section) {
     mapa:           'Mapa del Establecimiento',
     logros:         'Logros del Liceo',
     especialidades: 'Talleres',
+    admision:       'Admisión y Postulación',
   };
   document.getElementById('content-title').textContent = titles[section] || section;
 
@@ -236,7 +287,42 @@ async function openSection(section) {
       break;
     case 'especialidades': body.innerHTML = renderEspecialidades(); break;
     case 'logros':         body.innerHTML = renderLogros();         break;
+    case 'admision':       body.innerHTML = renderAdmision();       break;
   }
+}
+
+// ── ADMISIÓN ───────────────────────────────────────────────────────
+function renderAdmision() {
+  const a = SCHOOL.admision;
+  if (!a) return '';
+  const periodos = a.periodos.map(p =>
+    `<div class="adm-periodo"><div class="adm-periodo-fecha">${p.fecha}</div><div class="adm-periodo-lbl">${p.titulo}</div></div>`
+  ).join('');
+  const lista = arr => arr.map(x => `<li>${x}</li>`).join('');
+
+  return `
+    <div class="adm-wrap">
+      <p class="adm-intro">${a.intro}</p>
+
+      <h3 class="adm-subtitle">📅 Fechas de postulación</h3>
+      <div class="adm-periodos">${periodos}</div>
+
+      <div class="adm-cols">
+        <div class="adm-card">
+          <h3 class="adm-subtitle">📋 Requisitos</h3>
+          <ul class="adm-list">${lista(a.requisitos)}</ul>
+        </div>
+        <div class="adm-card">
+          <h3 class="adm-subtitle">⚙️ Especialidades</h3>
+          <ul class="adm-list">${lista(a.especialidades)}</ul>
+        </div>
+      </div>
+
+      <h3 class="adm-subtitle">⭐ Por qué elegirnos</h3>
+      <ul class="adm-list adm-list-2col">${lista(a.beneficios)}</ul>
+
+      <div class="adm-contacto">📞 ${a.contacto}</div>
+    </div>`;
 }
 
 // ── HISTORIA ───────────────────────────────────────────────────────
