@@ -371,7 +371,7 @@ function startSlideshow(photos) {
   // Tocar el slideshow abre la imagen completa en el visor
   if (showEl) {
     showEl.classList.add('clickable');
-    showEl.addEventListener('click', () => openLightbox(hist.curr));
+    showEl.addEventListener('click', () => openLightbox(hist.photos, hist.curr));
   }
 
   // Counter
@@ -432,34 +432,36 @@ function startSlideshow(photos) {
 }
 
 // ── VISOR DE FOTO COMPLETA (LIGHTBOX) ──────────────────────────────
-function openLightbox(index) {
-  if (!hist.photos.length) return;
-  const lb    = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lightbox-img');
-  const lbCnt = document.getElementById('lightbox-counter');
+// Sirve tanto al slideshow de Historia como a las galerías de Talleres.
+let lbPhotos = [];
+let lbIndex  = 0;
+
+function lbRender() {
+  document.getElementById('lightbox-img').src = lbPhotos[lbIndex];
+  document.getElementById('lightbox-counter').textContent = `${lbIndex + 1} / ${lbPhotos.length}`;
+}
+
+function openLightbox(photos, index) {
+  if (!photos || !photos.length) return;
+  const lb = document.getElementById('lightbox');
   if (!lb) return;
 
-  hist.lbIndex = index;
-  hist.paused  = true; // congela el autoavance del slideshow mientras se mira
+  lbPhotos = photos;
+  lbIndex  = index || 0;
+  hist.paused = true; // si venimos del slideshow de Historia, lo congela
 
-  const render = () => {
-    lbImg.src = hist.photos[hist.lbIndex];
-    lbCnt.textContent = `${hist.lbIndex + 1} / ${hist.photos.length}`;
-  };
-  render();
-  hist.lbRender = render;
-
+  lbRender();
   lb.classList.add('open');
-  const multi = hist.photos.length > 1;
+  const multi = lbPhotos.length > 1;
   document.getElementById('lightbox-prev').style.display = multi ? '' : 'none';
   document.getElementById('lightbox-next').style.display = multi ? '' : 'none';
 }
 
 function lightboxNav(dir) {
-  const n = hist.photos.length;
+  const n = lbPhotos.length;
   if (!n) return;
-  hist.lbIndex = (hist.lbIndex + dir + n) % n;
-  if (hist.lbRender) hist.lbRender();
+  lbIndex = (lbIndex + dir + n) % n;
+  lbRender();
 }
 
 function closeLightbox() {
@@ -468,16 +470,29 @@ function closeLightbox() {
   hist.paused = false; // reanuda el slideshow
 }
 
+// Abrir la galería de fotos de un taller
+function openTallerLightbox(espIndex, fotoIndex) {
+  const e = SCHOOL.especialidades[espIndex];
+  if (e && e.fotos) openLightbox(e.fotos, fotoIndex);
+}
+window.openTallerLightbox = openTallerLightbox;
+
 // ── ESPECIALIDADES ─────────────────────────────────────────────────
 function renderEspecialidades() {
-  const cards = SCHOOL.especialidades.map(e =>
-    `<div class="esp-card">
+  const cards = SCHOOL.especialidades.map((e, ei) => {
+    const fotos = e.fotos || [];
+    const thumbs = fotos.map((f, fi) =>
+      `<img class="esp-thumb" src="${f}" alt="${e.name}" loading="lazy"
+            onclick="openTallerLightbox(${ei}, ${fi})" />`
+    ).join('');
+    return `<div class="esp-card">
        <div class="esp-icon">${e.icon}</div>
        <div class="esp-name">${e.name}</div>
        <div class="esp-desc">${e.desc}</div>
        <span class="esp-badge">${e.nivel}</span>
-     </div>`
-  ).join('');
+       ${thumbs ? `<div class="esp-gallery">${thumbs}</div>` : ''}
+     </div>`;
+  }).join('');
 
   const ci = SCHOOL.centroInnovacion;
   const ciCard = ci ? `

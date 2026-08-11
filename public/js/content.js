@@ -37,30 +37,54 @@ const SCHOOL = {
       name:  'Electricidad',
       desc:  'Formamos técnicos competentes en instalaciones eléctricas residenciales, comerciales e industriales, brindándoles herramientas concretas para desempeñarse con éxito en el mundo del trabajo.',
       nivel: 'Técnico de Nivel Medio',
+      fotos: [
+        'assets/talleres/electricidad-1.jpg', 'assets/talleres/electricidad-2.jpg',
+        'assets/talleres/electricidad-3.jpg', 'assets/talleres/electricidad-4.jpg',
+        'assets/talleres/electricidad-5.jpg', 'assets/talleres/electricidad-6.jpg',
+      ],
     },
     {
       icon:  '🏠',
       name:  'Edificación',
       desc:  'Preparamos a nuestros estudiantes en construcción, lectura de planos, materialidad y técnicas constructivas modernas, abriendo puertas en uno de los sectores más dinámicos del país.',
       nivel: 'Técnico de Nivel Medio',
+      fotos: [
+        'assets/talleres/edificacion-1.jpg', 'assets/talleres/edificacion-2.jpg',
+        'assets/talleres/edificacion-3.jpg', 'assets/talleres/edificacion-4.jpg',
+        'assets/talleres/edificacion-5.jpg', 'assets/talleres/edificacion-6.jpg',
+        'assets/talleres/edificacion-7.jpg',
+      ],
     },
     {
       icon:  '🚗',
       name:  'Mecánica Automotriz',
       desc:  'Entregamos formación integral en diagnóstico, mantención y reparación de vehículos, habilitando a los estudiantes para insertarse con confianza en la industria del transporte y los servicios automotrices.',
       nivel: 'Técnico de Nivel Medio',
+      fotos: [
+        'assets/talleres/mecanica-1.jpg', 'assets/talleres/mecanica-2.jpg',
+      ],
     },
     {
       icon:  '🏗️',
       name:  'Construcciones Metálicas',
       desc:  'Desarrollamos habilidades en fabricación y montaje de estructuras metálicas y soldadura industrial, dotando a los jóvenes de competencias altamente valoradas en la industria y la construcción.',
       nivel: 'Técnico de Nivel Medio',
+      fotos: [
+        'assets/talleres/metalicas-1.jpg', 'assets/talleres/metalicas-2.jpg',
+        'assets/talleres/metalicas-3.jpg', 'assets/talleres/metalicas-4.jpg',
+        'assets/talleres/metalicas-5.jpg', 'assets/talleres/metalicas-6.jpg',
+      ],
     },
     {
       icon:  '🔩',
       name:  'Instalaciones Sanitarias',
       desc:  'Capacitamos a los estudiantes en instalación y mantención de redes de agua potable, alcantarillado y sistemas de calefacción, una especialidad esencial para el bienestar de las comunidades.',
       nivel: 'Técnico de Nivel Medio',
+      fotos: [
+        'assets/talleres/sanitarias-1.jpg', 'assets/talleres/sanitarias-2.jpg',
+        'assets/talleres/sanitarias-3.jpg', 'assets/talleres/sanitarias-4.jpg',
+        'assets/talleres/sanitarias-5.jpg', 'assets/talleres/sanitarias-6.jpg',
+      ],
     },
   ],
 

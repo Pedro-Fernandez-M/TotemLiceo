@@ -482,6 +482,23 @@ html, body {
   padding: 4px 12px; border-radius: 12px; font-size: .85rem; font-weight: 600;
 }
 
+/* Galería de fotos del taller */
+.esp-gallery {
+  display: flex; gap: 8px; margin-top: 14px;
+  overflow-x: auto; padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.esp-gallery::-webkit-scrollbar { height: 5px; }
+.esp-gallery::-webkit-scrollbar-thumb { background: var(--bg3h); border-radius: 3px; }
+.esp-thumb {
+  width: 92px; height: 68px; flex-shrink: 0;
+  object-fit: cover; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--border);
+  transition: transform .14s, border-color .14s;
+}
+.esp-thumb:hover  { border-color: var(--blue); transform: translateY(-2px); }
+.esp-thumb:active { transform: scale(.95); }
+
 /* Centro de Innovación – tarjeta destacada dentro de Talleres */
 .ci-card {
   display: flex; align-items: center; gap: 22px;
