@@ -595,7 +595,7 @@ function renderTallerDetalle(i) {
   const e = SCHOOL.especialidades[i];
   if (!e) return '';
   const thumbs = (e.fotos || []).map((f, fi) =>
-    `<img class="esp-thumb" src="${f}" alt="${e.name}" loading="lazy"
+    `<img class="esp-thumb" src="${f}" alt="${e.name}"
           onclick="openTallerLightbox(${i}, ${fi})" />`
   ).join('');
 
