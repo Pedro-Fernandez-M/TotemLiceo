@@ -8,7 +8,7 @@ REM   Si cambia la disposicion de pantallas, ajusta WINPOS.
 REM ============================================================
 
 set "CHROME=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
-set "URL=https://totem-liceo.vercel.app"
+set "URL=https://totem-liceo-zrih.vercel.app"
 set "WINPOS=1366,0"
 
 start "" "%CHROME%" ^

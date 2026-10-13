@@ -6,7 +6,7 @@ computador con **pantalla táctil** en la entrada del establecimiento: informa a
 visitas, apoderados y futuros estudiantes, y funciona de forma autónoma y sin
 conexión permanente a internet.
 
-🔗 **En producción:** https://totem-liceo.vercel.app
+🔗 **En producción:** https://totem-liceo-zrih.vercel.app
 
 ---
 
